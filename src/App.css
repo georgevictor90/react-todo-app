@@ -219,6 +219,107 @@ body {
 .submit-button-icon,
 .manage-projects-icon,
 .icon {
-  width: 25px;
+  font-size: 1.5rem;
   opacity: 0.6;
+}
+
+/* //////////// POPUP MENU */
+.popup-menu,
+.manage-projects {
+  z-index: 1;
+  overflow: scroll;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+  height: 100vh;
+  width: 100%;
+  border: 1px solid #f0f0f0;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  padding: 20px;
+  opacity: 1;
+  transition: all 400ms ease;
+}
+
+.close {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.close-button {
+  font-size: 1.7rem;
+  display: block;
+  margin-left: auto;
+  margin-bottom: 20px;
+}
+
+.popup-menu > li {
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.menu-sections {
+  padding-left: 10px;
+}
+
+.menu-sections-list li {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  gap: 7px;
+}
+
+.section-icon {
+  font-size: 1.5rem;
+}
+
+.projects-section {
+  margin-top: 40px;
+}
+
+.project-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.new-project-button {
+  font-size: 30px;
+  opacity: 0.6;
+}
+
+.projects-section-title {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.projects-section-list,
+.manage-projects-list {
+  margin-left: 10px;
+  margin-top: 20px;
+}
+
+.project-item,
+.manage-projects-item {
+  display: flex;
+  padding: 2px;
+  align-items: center;
+  gap: 7px;
+  margin-top: 20px;
+}
+
+.project-item > span {
+  font-size: 1.2em;
+}
+
+.manage-projects-button {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  /* margin-left: 10px; */
+  margin-top: 30px;
+}
+
+.manage-projects-icon {
 }

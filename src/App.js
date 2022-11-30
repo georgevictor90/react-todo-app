@@ -5,6 +5,7 @@ import DefaultProject from "./components/DefaultProject/DefaultProject";
 import Footer from "./components/Footer";
 import TopBar from "./components/TopBar";
 import AddTask from "./components/AddTask/AddTask";
+import PopupMenu from "./components/PopupMenu/PopupMenu";
 
 function App() {
   // eslint-disable-next-line no-unused-vars
@@ -20,26 +21,31 @@ function App() {
       todos: [],
     },
   ]);
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  const [popupIsOpen, setPopupIsOpen] = React.useState(false);
 
   function toggleModal() {
-    setIsOpen(!isOpen);
+    setModalIsOpen(!modalIsOpen);
+  }
+  function togglePopup() {
+    setPopupIsOpen(!popupIsOpen);
   }
 
   return (
     <div className="App">
+      <PopupMenu popupIsOpen={popupIsOpen} togglePopup={togglePopup} />
+      <TopBar projects={projects} />
       <BrowserRouter>
-        <TopBar projects={projects} />
         <Routes>
           <Route index element={<DefaultProject projects={projects} />} />
         </Routes>
-        <AddTask
-          projects={projects}
-          isOpen={isOpen}
-          toggleModal={toggleModal}
-        />
-        <Footer openModal={toggleModal} />
       </BrowserRouter>
+      <AddTask
+        projects={projects}
+        IsOpen={modalIsOpen}
+        toggleModal={toggleModal}
+      />
+      <Footer togglePopup={togglePopup} openModal={toggleModal} />
     </div>
   );
 }
