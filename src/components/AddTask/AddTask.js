@@ -5,11 +5,11 @@ import Modal from "react-modal";
 
 Modal.setAppElement("#root");
 
-export default function AddTask({ projects, isOpen, toggleModal }) {
+export default function AddTask({ projects, modalIsOpen, toggleModal }) {
   return (
     <Modal
       className="modal"
-      isOpen={isOpen}
+      isOpen={modalIsOpen}
       onRequestClose={toggleModal}
       contentLabel="Add Task"
     >

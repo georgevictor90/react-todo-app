@@ -25,6 +25,7 @@ function App() {
   const [popupIsOpen, setPopupIsOpen] = React.useState(false);
 
   function toggleModal() {
+    console.log("toggle modal");
     setModalIsOpen(!modalIsOpen);
   }
   function togglePopup() {
@@ -42,10 +43,10 @@ function App() {
       </BrowserRouter>
       <AddTask
         projects={projects}
-        IsOpen={modalIsOpen}
+        modalIsOpen={modalIsOpen}
         toggleModal={toggleModal}
       />
-      <Footer togglePopup={togglePopup} openModal={toggleModal} />
+      <Footer togglePopup={togglePopup} toggleModal={toggleModal} />
     </div>
   );
 }
