@@ -1,27 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  /* overflow: hidden; */
+}
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
+  background-color: white;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font-size: calc(10px + 2vmin);
-  color: white;
+  /* color: white; */
 }
 
 .App-link {
@@ -35,4 +37,95 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.App-header,
+.App-footer {
+  width: 100%;
+  background: white;
+  color: black;
+  padding: 1rem;
+}
+
+.App-header {
+  text-align: left;
+}
+
+.App-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  background: orange;
+}
+
+.hamburger {
+  background: none;
+  border: none;
+}
+
+.App-footer .btn-line {
+  width: 30px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
+}
+
+.App-footer > .plus-button {
+  font-size: 1.5rem;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  position: absolute;
+  top: -25px;
+  left: 0;
+  right: 0;
+  background: orange;
+  border: 4px solid white;
+  border-radius: 50%;
+  margin-inline: auto;
+}
+
+.github-icon {
+  color: white;
+  font-size: 2.5rem;
+}
+
+/* .section-content {
+  background: red;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+} */
+
+.section-img-and-info {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.section-image {
+  width: 70%;
+  max-width: 350px;
+  opacity: 0.8;
+}
+
+.section-content-info {
+  width: 100%;
+  text-align: center;
+  line-height: 2;
+  font-size: 1.1em;
+  font-weight: 300;
+  /* padding: 10px 30px; */
+}
+
+.status-text {
+  white-space: pre;
 }
