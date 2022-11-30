@@ -1,10 +1,10 @@
 import React from "react";
 import Bicycle from "./bicycle.svg";
 
-export default function DefaultProject({ currentSection }) {
+export default function DefaultProject({ projects }) {
   return (
     <section className="section-content">
-      {currentSection.todos.length ? (
+      {projects[1].todos.length ? (
         <div className="tasks-container">here go the task cards</div>
       ) : (
         <div className="section-img-and-info">
