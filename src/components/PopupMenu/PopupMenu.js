@@ -7,13 +7,14 @@ import {
   IoSettingsOutline,
 } from "react-icons/io5";
 
-export default function PopupMenu({ popupIsOpen, togglePopup }) {
+export default function PopupMenu({ toggleForm, popupIsOpen, togglePopup }) {
   return (
     <nav
       className={popupIsOpen ? "popup-menu" : "popup-menu close"}
       role="navigation"
     >
       <SlClose onClick={togglePopup} className="close-button" />
+
       <div className="menu-section">
         <ul className="menu-sections-list">
           <li>
@@ -36,7 +37,9 @@ export default function PopupMenu({ popupIsOpen, togglePopup }) {
       <div className="projects-section">
         <div className="project-section-header">
           <span className="projects-section-title">Projects</span>
-          <IoAddCircleOutline className="new-project-button" />
+          <button onClick={toggleForm} className="new-project-button">
+            <IoAddCircleOutline />
+          </button>
         </div>
         <ul className="projects-section-list"></ul>
         <div className="manage-projects-button">
