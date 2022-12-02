@@ -61,6 +61,7 @@ button {
   background: white;
   color: black;
   padding: 0.7rem 1rem;
+  text-transform: capitalize;
 }
 
 .App-header {
@@ -112,15 +113,15 @@ button {
   box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* .section-content {
-  background: red;
+.section-content {
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: auto;
-} */
+}
 
 .section-img-and-info {
   box-sizing: border-box;
@@ -145,6 +146,54 @@ button {
   font-size: 1.1em;
   font-weight: 300;
   /* padding: 10px 30px; */
+}
+
+.section-content-info > *:last-child {
+  font-size: 0.8em;
+  font-weight: 400;
+  opacity: 0.5;
+}
+
+/* /////tasks-container */
+.tasks-container {
+  width: 100vw;
+  height: 100%;
+  padding: 20px 10px;
+}
+
+.task-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 15px;
+  border-bottom: 1px solid #e3e3e3;
+  font-size: 1.2rem;
+}
+
+.task-always-visible {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+}
+
+.task-card-title {
+  margin: 0;
+  padding: 0;
+}
+
+.task-expandable {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.hidden-element {
+  /* display: none; */
+}
+
+.task-circle {
+  font-size: 1rem;
 }
 
 .status-text {
@@ -284,11 +333,21 @@ button {
   padding-left: 10px;
 }
 
-.menu-sections-list li {
+.menu-sections-list a {
   display: flex;
   align-items: center;
-  margin-top: 20px;
   gap: 7px;
+  text-decoration: none;
+  color: var(--secondary);
+}
+
+.menu-sections-list a:visited {
+  color: var(--secondary);
+}
+
+.menu-sections-list li {
+  margin-top: 20px;
+  list-style: none;
 }
 
 .section-icon {
@@ -340,9 +399,6 @@ button {
   align-items: center;
   /* margin-left: 10px; */
   margin-top: 30px;
-}
-
-.manage-projects-icon {
 }
 
 /* ///////////NEW PROJECT FORM */
@@ -436,7 +492,7 @@ button {
 }
 .color-icon,
 .edit-color-icon {
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 .selected-color-label,
 .edit-selected-color-label {
@@ -468,9 +524,10 @@ button {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* gap: 10px; */
+  gap: 1rem;
 }
 .color-choices-list {
+  width: 100%;
   margin-top: 20px;
   display: flex;
   flex-direction: column;
@@ -478,11 +535,11 @@ button {
 .color-list-item {
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
-  padding: 5px 15px;
+  padding: 1rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 5px;
+  gap: 1rem;
 }
 .color-list-item > span {
   font-size: 1.2em;
