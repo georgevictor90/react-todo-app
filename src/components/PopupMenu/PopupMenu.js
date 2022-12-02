@@ -18,19 +18,22 @@ export default function PopupMenu({ toggleForm, popupIsOpen, togglePopup }) {
       <div className="menu-section">
         <ul className="menu-sections-list">
           <li>
-            <IoFolderOutline
-              style={{ color: "blue" }}
-              className="section-icon"
-            />
-
-            <span>Inbox</span>
+            <a onClick={togglePopup} href="#">
+              <IoFolderOutline
+                style={{ color: "blue" }}
+                className="section-icon"
+              />
+              <span>Inbox</span>
+            </a>
           </li>
           <li>
-            <IoCalendarOutline
-              style={{ color: "green" }}
-              className="section-icon"
-            />
-            <span>Today</span>
+            <a onClick={togglePopup} href="#">
+              <IoCalendarOutline
+                style={{ color: "green" }}
+                className="section-icon"
+              />
+              <span>Today</span>
+            </a>
           </li>
         </ul>
       </div>
