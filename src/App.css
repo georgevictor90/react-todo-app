@@ -254,9 +254,11 @@ button {
 }
 .pills {
   display: flex;
+  align-items: center;
   gap: 10px;
   padding: 6px;
 }
+
 .due-date-button,
 .folder-select-button {
   padding: 0.5rem 0.3rem;
@@ -265,12 +267,11 @@ button {
   border-radius: 10px;
   font-size: 0.9em;
   width: 100%;
+  height: 35px !important;
 }
 
 .due-date-button {
-  display: flex;
-  align-items: center;
-  gap: 3px;
+  height: 100%;
 }
 
 .submit-button {
