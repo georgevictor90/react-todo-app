@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { clear } from "@testing-library/user-event/dist/clear";
 
 Modal.setAppElement("#root");
 
@@ -26,6 +27,13 @@ export default function AddTask({ projects, modalIsOpen, toggleModal }) {
     setProjectFolder(e.target.value);
   }
 
+  function clearForm() {
+    setTitle("");
+    setDescription("");
+    setProjectFolder("inbox");
+    setSelectedDate(new Date());
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     const task = {
@@ -35,6 +43,8 @@ export default function AddTask({ projects, modalIsOpen, toggleModal }) {
       date: selectedDate,
       formattedDate: selectedDate.toLocaleDateString("en-GB"),
     };
+
+    clearForm();
 
     console.log(task);
   }
