@@ -17,19 +17,13 @@ function App() {
   window.addEventListener("resize", documentHeight);
   documentHeight();
 
-  // eslint-disable-next-line no-unused-vars
-  const [projects, setProjects] = React.useState([
-    {
-      title: "Inbox",
-      type: "default",
-      todos: [],
-    },
-    {
-      title: "Today",
-      type: "default",
-      todos: [],
-    },
-  ]);
+  const [defaultSections, setDefaultSections] = React.useState({
+    today: [],
+    inbox: [],
+  });
+
+  const [currentProject, setCurrentProject] = React.useState("today");
+
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [popupIsOpen, setPopupIsOpen] = React.useState(false);
   const [formIsOpen, setFormIsOpen] = React.useState(false);
@@ -62,14 +56,22 @@ function App() {
         formIsOpen={formIsOpen}
         toggleForm={toggleForm}
       />
-      <TopBar projects={projects} />
+      <TopBar currentProject={currentProject} />
       <BrowserRouter>
         <Routes>
-          <Route index element={<DefaultProject projects={projects} />} />
+          <Route
+            index
+            element={
+              <DefaultProject
+                currentProject={currentProject}
+                defaultSections={defaultSections}
+              />
+            }
+          />
         </Routes>
       </BrowserRouter>
       <AddTask
-        projects={projects}
+        defaultSections={defaultSections}
         modalIsOpen={modalIsOpen}
         toggleModal={toggleModal}
       />
