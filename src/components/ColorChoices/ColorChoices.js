@@ -2,12 +2,23 @@ import React from "react";
 import { IoListOutline } from "react-icons/io5";
 import { colors } from "./Colors";
 
-export default function ColorChoices({ isOpen, toggleColorChoices }) {
+export default function ColorChoices({
+  setColorCode,
+  setColor,
+  isOpen,
+  toggleColorChoices,
+}) {
+  function handleClick(colorName, colorCode) {
+    setColorCode(colorCode);
+    setColor(colorName);
+    toggleColorChoices();
+  }
+
   const colorChoicesElements = colors.map((color) => {
     return (
       <li
         key={color.name}
-        onClick={toggleColorChoices}
+        onClick={() => handleClick(color.name, color.code)}
         className="color-list-item"
       >
         <IoListOutline

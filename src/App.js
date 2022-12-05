@@ -1,4 +1,3 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
 import "./App.css";
 import DefaultProject from "./components/DefaultProject/DefaultProject";
@@ -7,7 +6,6 @@ import TopBar from "./components/TopBar";
 import AddTask from "./components/AddTask/AddTask";
 import PopupMenu from "./components/PopupMenu/PopupMenu";
 import ProjectForm from "./components/ProjectForm/ProjectForm";
-import ColorChoices from "./components/ColorChoices/ColorChoices";
 
 function App() {
   const documentHeight = () => {
@@ -17,9 +15,9 @@ function App() {
   window.addEventListener("resize", documentHeight);
   documentHeight();
 
-  const [defaultSections, setDefaultSections] = React.useState({
-    today: [],
-    inbox: [],
+  const [projects, setProjects] = React.useState({
+    today: { type: "defaultProject", tasks: [] },
+    inbox: { type: "defaultProject", tasks: [] },
   });
 
   const [currentProject, setCurrentProject] = React.useState("today");
@@ -27,11 +25,6 @@ function App() {
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [popupIsOpen, setPopupIsOpen] = React.useState(false);
   const [formIsOpen, setFormIsOpen] = React.useState(false);
-  const [colorChoicesIsOpen, setColorChoicesIsOpen] = React.useState(false);
-
-  function toggleColorChoices() {
-    setColorChoicesIsOpen(!colorChoicesIsOpen);
-  }
 
   function toggleModal() {
     setModalIsOpen(!modalIsOpen);
@@ -47,39 +40,30 @@ function App() {
   return (
     <div className="App">
       <PopupMenu
+        projects={projects}
+        setCurrentProject={setCurrentProject}
         toggleForm={toggleForm}
         popupIsOpen={popupIsOpen}
         togglePopup={togglePopup}
       />
       <ProjectForm
-        toggleColorChoices={toggleColorChoices}
+        projects={projects}
+        setProjects={setProjects}
         formIsOpen={formIsOpen}
         toggleForm={toggleForm}
       />
       <TopBar currentProject={currentProject} />
-      <BrowserRouter>
-        <Routes>
-          <Route
-            index
-            element={
-              <DefaultProject
-                currentProject={currentProject}
-                defaultSections={defaultSections}
-              />
-            }
-          />
-        </Routes>
-      </BrowserRouter>
+
+      <DefaultProject currentProject={currentProject} projects={projects} />
       <AddTask
-        defaultSections={defaultSections}
+        setProjects={setProjects}
+        currentProject={currentProject}
+        setCurrentProject={setCurrentProject}
+        projects={projects}
         modalIsOpen={modalIsOpen}
         toggleModal={toggleModal}
       />
       <Footer togglePopup={togglePopup} toggleModal={toggleModal} />
-      <ColorChoices
-        isOpen={colorChoicesIsOpen}
-        toggleColorChoices={toggleColorChoices}
-      />
     </div>
   );
 }

@@ -3,13 +3,20 @@ import { RxPaperPlane } from "react-icons/rx";
 import { SlClose } from "react-icons/sl";
 import Modal from "react-modal";
 import DatePicker from "react-datepicker";
+import { nanoid } from "nanoid";
 
 import "react-datepicker/dist/react-datepicker.css";
-import { clear } from "@testing-library/user-event/dist/clear";
 
 Modal.setAppElement("#root");
 
-export default function AddTask({ projects, modalIsOpen, toggleModal }) {
+export default function AddTask({
+  currentProject,
+  setCurrentProject,
+  setProjects,
+  projects,
+  modalIsOpen,
+  toggleModal,
+}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [projectFolder, setProjectFolder] = useState("inbox");
@@ -36,7 +43,9 @@ export default function AddTask({ projects, modalIsOpen, toggleModal }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!title) return;
     const task = {
+      id: nanoid(),
       title: title,
       description: description,
       folder: projectFolder,
@@ -45,9 +54,46 @@ export default function AddTask({ projects, modalIsOpen, toggleModal }) {
     };
 
     clearForm();
-
-    console.log(task);
+    AddNewTask(task);
+    setCurrentProject(task.folder);
   }
+
+  function AddNewTask(task) {
+    const currentDate = new Date().toLocaleDateString("en-GB");
+
+    if (task.formattedDate === currentDate) {
+      setProjects({
+        ...projects,
+        today: { ...projects.today, tasks: [...projects.today.tasks, task] },
+        [projectFolder]: {
+          ...projects[projectFolder],
+          tasks: [...projects[projectFolder].tasks, task],
+        },
+      });
+    } else {
+      setProjects({
+        ...projects,
+        [projectFolder]: {
+          ...projects[projectFolder],
+          tasks: [...projects[projectFolder].tasks, task],
+        },
+      });
+    }
+  }
+
+  const optionElements = Object.keys(projects)
+    .filter((item) => item !== "today")
+    .map((item) => {
+      return item === "inbox" ? (
+        <option key={item} value="inbox">
+          Inbox
+        </option>
+      ) : (
+        <option key={item} value={item}>
+          {item}
+        </option>
+      );
+    });
 
   return (
     <Modal
@@ -67,6 +113,7 @@ export default function AddTask({ projects, modalIsOpen, toggleModal }) {
             onChange={handleTitleChange}
             value={title}
             placeholder="e.g. Renew gym subscription"
+            required
           />
           <textarea
             name="description"
@@ -95,7 +142,8 @@ export default function AddTask({ projects, modalIsOpen, toggleModal }) {
               id="select"
               className="folder-select-button"
             >
-              <option value="inbox">Inbox</option>
+              {optionElements}
+              {/* <option value="inbox">Inbox</option> */}
             </select>
           </div>
           <div className="item-actions"></div>

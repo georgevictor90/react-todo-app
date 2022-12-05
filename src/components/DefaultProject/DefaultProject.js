@@ -5,17 +5,19 @@ import {
   IoCheckmarkCircleOutline,
 } from "react-icons/io5";
 
-export default function DefaultProject({ defaultSections, currentProject }) {
-  const taskCards = defaultSections[currentProject].map((task) => {
+export default function DefaultProject({ projects, currentProject }) {
+  const taskCards = projects[currentProject].tasks.map((task) => {
     return (
-      <div key={task.title} className="task-card">
+      <div key={task.id} className="task-card">
         <div className="task-always-visible">
           <IoRadioButtonOffOutline className="task-circle" />
           <div className="task-card-title">{task.title}</div>
         </div>
         <div className="task-expandable hidden-element">
-          <p className="task-card-description">{task.description || ""}</p>
-          <span className="task-card-description">{task.date || ""}</span>
+          {task.description && (
+            <p className="task-card-description">{task.description}</p>
+          )}
+          <span className="task-card-description">{task.formattedDate}</span>
         </div>
       </div>
     );
@@ -23,7 +25,7 @@ export default function DefaultProject({ defaultSections, currentProject }) {
 
   return (
     <section className="section-content">
-      {defaultSections[currentProject].length ? (
+      {projects[currentProject].tasks.length ? (
         <div className="tasks-container">{taskCards}</div>
       ) : (
         <div className="section-img-and-info">
