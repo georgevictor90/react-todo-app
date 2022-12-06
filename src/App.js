@@ -54,7 +54,11 @@ function App() {
       />
       <TopBar currentProject={currentProject} />
 
-      <DefaultProject currentProject={currentProject} projects={projects} />
+      <DefaultProject
+        currentProject={currentProject}
+        setProjects={setProjects}
+        projects={projects}
+      />
       <AddTask
         setProjects={setProjects}
         currentProject={currentProject}
