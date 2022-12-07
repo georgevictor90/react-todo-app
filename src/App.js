@@ -6,6 +6,9 @@ import TopBar from "./components/TopBar";
 import AddTask from "./components/AddTask/AddTask";
 import PopupMenu from "./components/PopupMenu/PopupMenu";
 import ProjectForm from "./components/ProjectForm/ProjectForm";
+import { useState, useEffect } from "react";
+import { db } from "./firebase-config";
+import { collection, doc, getDocs } from "firebase/firestore";
 
 function App() {
   const documentHeight = () => {
@@ -15,16 +18,27 @@ function App() {
   window.addEventListener("resize", documentHeight);
   documentHeight();
 
-  const [projects, setProjects] = React.useState({
-    today: { type: "defaultProject", tasks: [] },
-    inbox: { type: "defaultProject", tasks: [] },
-  });
+  const [projects, setProjects] = useState([]);
+  const projectsRef = collection(db, "projects");
 
-  const [currentProject, setCurrentProject] = React.useState("today");
+  useEffect(() => {
+    const getProjects = async () => {
+      const data = await getDocs(projectsRef);
+      // console.log(data.docs);
+      setProjects(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
 
-  const [modalIsOpen, setModalIsOpen] = React.useState(false);
-  const [popupIsOpen, setPopupIsOpen] = React.useState(false);
-  const [formIsOpen, setFormIsOpen] = React.useState(false);
+    getProjects();
+  }, []);
+
+  // useEffect(() => {
+  //   console.log(projects);
+  // }, [projects]);
+
+  const [currentProject, setCurrentProject] = useState("today");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [popupIsOpen, setPopupIsOpen] = useState(false);
+  const [formIsOpen, setFormIsOpen] = useState(false);
 
   function toggleModal() {
     setModalIsOpen(!modalIsOpen);

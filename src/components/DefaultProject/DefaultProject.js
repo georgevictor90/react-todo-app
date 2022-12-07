@@ -10,46 +10,50 @@ export default function DefaultProject({
   setProjects,
   currentProject,
 }) {
-  // const [startRemove, setStartRemove] = React.useState("false");
   const [removedCard, setRemovedCard] = React.useState("");
+  const filtered = projects.find((proj) => proj.name === currentProject);
 
-  const taskCards = projects[currentProject].tasks.map((task) => {
-    return (
-      <div key={task.id} className="task-card">
-        <div className="task-always-visible">
-          {removedCard !== task.id ? (
-            <IoRadioButtonOffOutline
-              data-id={task.id}
-              onClick={toggleRemove}
-              className="task-circle"
-            />
-          ) : (
-            <IoCheckmarkCircleOutline
-              data-id={task.id}
-              onClick={toggleRemove}
-              className="task-circle"
-            />
-          )}
-          <div
-            style={
-              removedCard === task.id
-                ? { textDecoration: "line-through" }
-                : null
-            }
-            className="task-card-title"
-          >
-            {task.title}
+  let taskCards = [];
+
+  if (projects.length) {
+    taskCards = filtered.tasks.map((task) => {
+      return (
+        <div key={task.id} className="task-card">
+          <div className="task-always-visible">
+            {removedCard !== task.id ? (
+              <IoRadioButtonOffOutline
+                data-id={task.id}
+                onClick={toggleRemove}
+                className="task-circle"
+              />
+            ) : (
+              <IoCheckmarkCircleOutline
+                data-id={task.id}
+                onClick={toggleRemove}
+                className="task-circle"
+              />
+            )}
+            <div
+              style={
+                removedCard === task.id
+                  ? { textDecoration: "line-through" }
+                  : null
+              }
+              className="task-card-title"
+            >
+              {task.title}
+            </div>
+          </div>
+          <div className="task-expandable hidden-element">
+            {task.description && (
+              <p className="task-card-description">{task.description}</p>
+            )}
+            <span className="task-card-description">{task.formattedDate}</span>
           </div>
         </div>
-        <div className="task-expandable hidden-element">
-          {task.description && (
-            <p className="task-card-description">{task.description}</p>
-          )}
-          <span className="task-card-description">{task.formattedDate}</span>
-        </div>
-      </div>
-    );
-  });
+      );
+    });
+  }
 
   function deleteTask(id) {
     const pairs = [];
@@ -78,18 +82,22 @@ export default function DefaultProject({
 
   return (
     <section className="section-content">
-      {projects[currentProject].tasks.length ? (
-        <div className="tasks-container">{taskCards}</div>
-      ) : (
-        <div className="section-img-and-info">
-          <img className="section-image" src={Bicycle} alt="No tasks" />
-          <div className="section-content-info">
-            <p className="status-text">
-              {`You're all done for today! \n Congratulations!`}
-            </p>
-            <p className="para-text">Enjoy the rest of the day!</p>
+      {projects.length ? (
+        filtered.tasks.length ? (
+          <div className="tasks-container">{taskCards}</div>
+        ) : (
+          <div className="section-img-and-info">
+            <img className="section-image" src={Bicycle} alt="No tasks" />
+            <div className="section-content-info">
+              <p className="status-text">
+                {`You're all done for today! \n Congratulations!`}
+              </p>
+              <p className="para-text">Enjoy the rest of the day!</p>
+            </div>
           </div>
-        </div>
+        )
+      ) : (
+        "Loading"
       )}
     </section>
   );
