@@ -8,7 +8,14 @@ import PopupMenu from "./components/PopupMenu/PopupMenu";
 import ProjectForm from "./components/ProjectForm/ProjectForm";
 import { useState, useEffect } from "react";
 import { db } from "./firebase-config";
-import { collection, doc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  updateDoc,
+  getDocs,
+  addDoc,
+  onSnapshot,
+} from "firebase/firestore";
 
 function App() {
   const documentHeight = () => {
@@ -18,22 +25,29 @@ function App() {
   window.addEventListener("resize", documentHeight);
   documentHeight();
 
+  const projectsCollectionRef = collection(db, "projects");
+  const tasksCollectionRef = collection(db, "tasks");
+
   const [projects, setProjects] = useState([]);
-  const projectsRef = collection(db, "projects");
+  const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {
-    const getProjects = async () => {
-      const data = await getDocs(projectsRef);
-      // console.log(data.docs);
-      setProjects(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
+  useEffect(
+    () =>
+      onSnapshot(projectsCollectionRef, (snapshot) => {
+        setProjects(
+          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        );
+      }),
+    []
+  );
 
-    getProjects();
-  }, []);
-
-  // useEffect(() => {
-  //   console.log(projects);
-  // }, [projects]);
+  useEffect(
+    () =>
+      onSnapshot(tasksCollectionRef, (snapshot) => {
+        setTasks(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      }),
+    []
+  );
 
   const [currentProject, setCurrentProject] = useState("today");
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -43,6 +57,7 @@ function App() {
   function toggleModal() {
     setModalIsOpen(!modalIsOpen);
   }
+
   function togglePopup() {
     setPopupIsOpen(!popupIsOpen);
   }
@@ -53,34 +68,32 @@ function App() {
 
   return (
     <div className="App">
-      <PopupMenu
-        projects={projects}
-        setCurrentProject={setCurrentProject}
-        toggleForm={toggleForm}
-        popupIsOpen={popupIsOpen}
-        togglePopup={togglePopup}
-      />
-      <ProjectForm
-        projects={projects}
-        setProjects={setProjects}
-        formIsOpen={formIsOpen}
-        toggleForm={toggleForm}
-      />
+      {projects.length && (
+        <PopupMenu
+          projects={projects}
+          setCurrentProject={setCurrentProject}
+          toggleForm={toggleForm}
+          popupIsOpen={popupIsOpen}
+          togglePopup={togglePopup}
+        />
+      )}
+      <ProjectForm formIsOpen={formIsOpen} toggleForm={toggleForm} />
       <TopBar currentProject={currentProject} />
 
       <DefaultProject
         currentProject={currentProject}
-        setProjects={setProjects}
         projects={projects}
+        tasks={tasks}
       />
-      <AddTask
-        setProjects={setProjects}
-        currentProject={currentProject}
-        setCurrentProject={setCurrentProject}
-        projects={projects}
-        modalIsOpen={modalIsOpen}
-        toggleModal={toggleModal}
-      />
+      {projects.length && (
+        <AddTask
+          projects={projects}
+          tasks={tasks}
+          setCurrentProject={setCurrentProject}
+          modalIsOpen={modalIsOpen}
+          toggleModal={toggleModal}
+        />
+      )}
       <Footer togglePopup={togglePopup} toggleModal={toggleModal} />
     </div>
   );

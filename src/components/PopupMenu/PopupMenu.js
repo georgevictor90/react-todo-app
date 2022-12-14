@@ -15,22 +15,22 @@ export default function PopupMenu({
   popupIsOpen,
   togglePopup,
 }) {
-  const userProjectLinks = Object.keys(projects)
-    .filter((keyName) => projects[keyName].type === "userProject")
-    .map((keyName) => {
+  const userProjectLinks = projects
+    .filter((project) => project.type === "user")
+    .map((project) => {
       return (
         <li
           onClick={() => {
-            handleClick(keyName);
+            handleClick(project.id);
           }}
-          key={projects[keyName].id}
+          key={project.id}
           className="project-item"
         >
           <IoDiscSharp
             className="section-icon"
-            style={{ color: `${projects[keyName].colorCode}` }}
+            style={{ color: `${projects.colorCode}` }}
           />
-          <span>{projects[keyName].name}</span>
+          <span>{project.id}</span>
         </li>
       );
     });

@@ -4,16 +4,17 @@ import { SlClose } from "react-icons/sl";
 import Modal from "react-modal";
 import DatePicker from "react-datepicker";
 import { nanoid } from "nanoid";
+import { db } from "../../firebase-config";
+import { collection, addDoc } from "firebase/firestore";
 
 import "react-datepicker/dist/react-datepicker.css";
 
 Modal.setAppElement("#root");
 
 export default function AddTask({
-  currentProject,
   setCurrentProject,
-  setProjects,
   projects,
+  tasks,
   modalIsOpen,
   toggleModal,
 }) {
@@ -43,54 +44,43 @@ export default function AddTask({
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log(tasks);
+
     if (!title) return;
     const task = {
-      id: nanoid(),
       title: title,
       description: description,
-      folder: projectFolder,
+      folder: [projectFolder],
       date: selectedDate,
       formattedDate: selectedDate.toLocaleDateString("en-GB"),
     };
 
     clearForm();
-    AddNewTask(task);
-    setCurrentProject(task.folder);
+    createTask(task);
+    setCurrentProject(task.folder[0]);
   }
 
-  function AddNewTask(task) {
+  async function createTask(task) {
     const currentDate = new Date().toLocaleDateString("en-GB");
+    const tasksRef = collection(db, "tasks");
 
     if (task.formattedDate === currentDate) {
-      setProjects({
-        ...projects,
-        today: { ...projects.today, tasks: [...projects.today.tasks, task] },
-        [projectFolder]: {
-          ...projects[projectFolder],
-          tasks: [...projects[projectFolder].tasks, task],
-        },
-      });
-    } else {
-      setProjects({
-        ...projects,
-        [projectFolder]: {
-          ...projects[projectFolder],
-          tasks: [...projects[projectFolder].tasks, task],
-        },
-      });
+      task.folder = [...task.folder, "today"];
     }
+
+    await addDoc(tasksRef, { ...task });
   }
 
-  const optionElements = Object.keys(projects)
-    .filter((item) => item !== "today")
+  const optionElements = projects
+    .filter((item) => item.id !== "today")
     .map((item) => {
-      return item === "inbox" ? (
-        <option key={item} value="inbox">
+      return item.id === "inbox" ? (
+        <option key={nanoid()} value="inbox">
           Inbox
         </option>
       ) : (
-        <option key={item} value={item}>
-          {item}
+        <option key={nanoid()} value={item.id}>
+          {item.id}
         </option>
       );
     });
