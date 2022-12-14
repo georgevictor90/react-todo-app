@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ColorChoices from "../ColorChoices/ColorChoices";
 
 import {
@@ -7,17 +7,30 @@ import {
   IoListOutline,
 } from "react-icons/io5";
 import { nanoid } from "nanoid";
+import { db } from "../../firebase-config";
+import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 
 export default function ProjectForm({
   projects,
   setProjects,
   formIsOpen,
   toggleForm,
+  projectToEdit,
+  setProjectToEdit,
 }) {
-  const [name, setName] = React.useState("");
-  const [color, setColor] = React.useState("Charcoal");
-  const [colorCode, setColorCode] = React.useState("#36454F");
-  const [colorChoicesIsOpen, setColorChoicesIsOpen] = React.useState(false);
+  const [name, setName] = useState("");
+  const [color, setColor] = useState("Charcoal");
+  const [colorCode, setColorCode] = useState("#36454F");
+  const [colorChoicesIsOpen, setColorChoicesIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (projectToEdit) {
+      setName(projectToEdit.name);
+      setColor(projectToEdit.color);
+      setColorCode(projectToEdit.colorCode);
+      console.log(projectToEdit.id);
+    }
+  }, [projectToEdit]);
 
   function toggleColorChoices() {
     setColorChoicesIsOpen(!colorChoicesIsOpen);
@@ -26,20 +39,34 @@ export default function ProjectForm({
   function handleClick() {
     if (!name) return;
 
-    setProjects({
-      ...projects,
-      [name]: {
-        name: name,
-        id: nanoid(),
-        type: "userProject",
-        color: color,
-        colorCode: colorCode,
-        tasks: [],
-      },
-    });
+    const project = {
+      name: name,
+      type: "user",
+      color: color,
+      colorCode: colorCode,
+    };
 
+    if (projectToEdit !== null) {
+      saveChangesToProject(projectToEdit.id, project);
+      setProjectToEdit(null);
+    } else {
+      createProject(project);
+    }
     resetProjectForm();
     toggleForm();
+  }
+
+  async function saveChangesToProject(id, project) {
+    console.log(project);
+    const projectRef = doc(db, "projects", id);
+    await setDoc(projectRef, project);
+  }
+
+  async function createProject(project) {
+    // const currentDate = new Date().toLocaleDateString("en-GB");
+    const projectsRef = collection(db, "projects");
+
+    await addDoc(projectsRef, { ...project });
   }
 
   function resetProjectForm() {

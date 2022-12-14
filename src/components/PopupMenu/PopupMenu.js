@@ -6,7 +6,11 @@ import {
   IoCalendarOutline,
   IoAddCircleOutline,
   IoSettingsOutline,
+  IoTrashBinOutline,
+  IoCreateOutline,
 } from "react-icons/io5";
+import { db } from "../../firebase-config";
+import { doc, deleteDoc, getDoc } from "firebase/firestore";
 
 export default function PopupMenu({
   projects,
@@ -14,23 +18,35 @@ export default function PopupMenu({
   toggleForm,
   popupIsOpen,
   togglePopup,
+  setProjectToEdit,
 }) {
   const userProjectLinks = projects
     .filter((project) => project.type === "user")
     .map((project) => {
       return (
-        <li
-          onClick={() => {
-            handleClick(project.id);
-          }}
-          key={project.id}
-          className="project-item"
-        >
+        <li key={project.id} className="project-item">
           <IoDiscSharp
             className="section-icon"
-            style={{ color: `${projects.colorCode}` }}
+            style={{ color: `${project.colorCode}` }}
           />
-          <span>{project.id}</span>
+          <span
+            onClick={() => {
+              handleClick(project.name);
+            }}
+          >
+            {project.name}
+          </span>
+          <div className="edit-project-buttons">
+            <IoCreateOutline onClick={() => editProject(project.id)} />
+            <IoTrashBinOutline
+              onClick={() => {
+                if (
+                  window.confirm("Are you sure you wish to delete this item?")
+                )
+                  deleteProject(project.id);
+              }}
+            />
+          </div>
         </li>
       );
     });
@@ -38,6 +54,19 @@ export default function PopupMenu({
   function handleClick(section) {
     setCurrentProject(section);
     togglePopup();
+  }
+
+  async function deleteProject(id) {
+    console.log(id);
+    const projectDoc = doc(db, "projects", id);
+    await deleteDoc(projectDoc);
+  }
+
+  async function editProject(id) {
+    const projectDoc = doc(db, "projects", id);
+    const projectData = await (await getDoc(projectDoc)).data();
+    setProjectToEdit({ ...projectData, id: id });
+    toggleForm();
   }
 
   return (
@@ -83,7 +112,7 @@ export default function PopupMenu({
         <ul className="projects-section-list">{userProjectLinks}</ul>
         <div className="manage-projects-button">
           <IoSettingsOutline className="manage-projects-icon" />
-          <span>Manage Projects</span>
+          <span>Hover projects to edit or delete</span>
         </div>
       </div>
     </nav>

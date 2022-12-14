@@ -53,6 +53,7 @@ function App() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [popupIsOpen, setPopupIsOpen] = useState(false);
   const [formIsOpen, setFormIsOpen] = useState(false);
+  const [projectToEdit, setProjectToEdit] = useState(null);
 
   function toggleModal() {
     setModalIsOpen(!modalIsOpen);
@@ -68,33 +69,46 @@ function App() {
 
   return (
     <div className="App">
-      {projects.length && (
-        <PopupMenu
-          projects={projects}
-          setCurrentProject={setCurrentProject}
-          toggleForm={toggleForm}
-          popupIsOpen={popupIsOpen}
-          togglePopup={togglePopup}
-        />
-      )}
-      <ProjectForm formIsOpen={formIsOpen} toggleForm={toggleForm} />
-      <TopBar currentProject={currentProject} />
+      {projects.length ? (
+        <>
+          <PopupMenu
+            setProjectToEdit={setProjectToEdit}
+            projects={projects}
+            setCurrentProject={setCurrentProject}
+            toggleForm={toggleForm}
+            popupIsOpen={popupIsOpen}
+            togglePopup={togglePopup}
+          />
 
-      <DefaultProject
-        currentProject={currentProject}
-        projects={projects}
-        tasks={tasks}
-      />
-      {projects.length && (
-        <AddTask
-          projects={projects}
-          tasks={tasks}
-          setCurrentProject={setCurrentProject}
-          modalIsOpen={modalIsOpen}
-          toggleModal={toggleModal}
-        />
+          <ProjectForm
+            setProjectToEdit={setProjectToEdit}
+            projectToEdit={projectToEdit}
+            projects={projects}
+            setProjects={setProjects}
+            formIsOpen={formIsOpen}
+            toggleForm={toggleForm}
+          />
+          <TopBar currentProject={currentProject} />
+
+          <DefaultProject
+            currentProject={currentProject}
+            projects={projects}
+            tasks={tasks}
+          />
+
+          <AddTask
+            projects={projects}
+            tasks={tasks}
+            setCurrentProject={setCurrentProject}
+            modalIsOpen={modalIsOpen}
+            toggleModal={toggleModal}
+          />
+
+          <Footer togglePopup={togglePopup} toggleModal={toggleModal} />
+        </>
+      ) : (
+        "Loading"
       )}
-      <Footer togglePopup={togglePopup} toggleModal={toggleModal} />
     </div>
   );
 }

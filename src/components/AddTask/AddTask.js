@@ -79,8 +79,8 @@ export default function AddTask({
           Inbox
         </option>
       ) : (
-        <option key={nanoid()} value={item.id}>
-          {item.id}
+        <option key={nanoid()} value={item.name}>
+          {item.name}
         </option>
       );
     });

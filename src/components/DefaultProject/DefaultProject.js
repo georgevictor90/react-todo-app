@@ -77,22 +77,18 @@ export default function DefaultProject({ currentProject, projects, tasks }) {
 
   return (
     <section className="section-content">
-      {tasks.length ? (
-        taskCards.length ? (
-          <div className="tasks-container">{taskCards}</div>
-        ) : (
-          <div className="section-img-and-info">
-            <img className="section-image" src={Bicycle} alt="No tasks" />
-            <div className="section-content-info">
-              <p className="status-text">
-                {`You're all done for today! \n Congratulations!`}
-              </p>
-              <p className="para-text">Enjoy the rest of the day!</p>
-            </div>
-          </div>
-        )
+      {taskCards.length ? (
+        <div className="tasks-container">{taskCards}</div>
       ) : (
-        "Loading"
+        <div className="section-img-and-info">
+          <img className="section-image" src={Bicycle} alt="No tasks" />
+          <div className="section-content-info">
+            <p className="status-text">
+              {`You're all done for today! \n Congratulations!`}
+            </p>
+            <p className="para-text">Enjoy the rest of the day!</p>
+          </div>
+        </div>
       )}
     </section>
   );
