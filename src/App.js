@@ -16,6 +16,7 @@ import {
   addDoc,
   onSnapshot,
 } from "firebase/firestore";
+import Welcome from "./components/Welcome/Welcome";
 
 function App() {
   const documentHeight = () => {
@@ -30,6 +31,12 @@ function App() {
 
   const [projects, setProjects] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [currentProject, setCurrentProject] = useState("today");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [popupIsOpen, setPopupIsOpen] = useState(false);
+  const [formIsOpen, setFormIsOpen] = useState(false);
+  const [projectToEdit, setProjectToEdit] = useState(null);
+  const [isRegistering, setIsRegistering] = useState(false);
 
   useEffect(
     () =>
@@ -49,12 +56,6 @@ function App() {
     []
   );
 
-  const [currentProject, setCurrentProject] = useState("today");
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [popupIsOpen, setPopupIsOpen] = useState(false);
-  const [formIsOpen, setFormIsOpen] = useState(false);
-  const [projectToEdit, setProjectToEdit] = useState(null);
-
   function toggleModal() {
     setModalIsOpen(!modalIsOpen);
   }
@@ -69,7 +70,8 @@ function App() {
 
   return (
     <div className="App">
-      {projects.length ? (
+      <Welcome />
+      {/* {projects.length ? (
         <>
           <PopupMenu
             setProjectToEdit={setProjectToEdit}
@@ -108,7 +110,7 @@ function App() {
         </>
       ) : (
         "Loading"
-      )}
+      )} */}
     </div>
   );
 }
