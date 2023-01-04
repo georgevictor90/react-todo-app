@@ -6,10 +6,17 @@ function Login({
   isRegistering,
   setIsRegistering,
   clearUserCredentials,
+  signIn,
 }) {
   function handleClick() {
     clearUserCredentials();
     setIsRegistering(!isRegistering);
+  }
+
+  function signInUser(e) {
+    e.preventDefault();
+    if (userCredentials.email === "" || userCredentials.password === "") return;
+    signIn();
   }
 
   return (
@@ -44,7 +51,7 @@ function Login({
           value={userCredentials.password || ""}
         />
 
-        <button className="auth-button" onClick={() => console.log("log in")}>
+        <button className="auth-button" onClick={signInUser}>
           Sign In
         </button>
         <span>
