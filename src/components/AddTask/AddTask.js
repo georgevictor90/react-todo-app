@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RxPaperPlane } from "react-icons/rx";
 import { SlClose } from "react-icons/sl";
 import Modal from "react-modal";
 import DatePicker from "react-datepicker";
 import { nanoid } from "nanoid";
 import { db } from "../../firebase-config";
-import { collection, addDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -13,15 +20,22 @@ Modal.setAppElement("#root");
 
 export default function AddTask({
   setCurrentProject,
+  currentUser,
   projects,
+  setProjects,
   tasks,
   modalIsOpen,
   toggleModal,
+  projectsRef,
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [projectFolder, setProjectFolder] = useState("inbox");
   const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const userRef = doc(db, "users", currentUser);
+  // const projectsRef = collection(userRef, "projects");
+  const tasksRef = collection(userRef, "tasks");
 
   function handleTitleChange(e) {
     setTitle(e.target.value);
@@ -42,34 +56,51 @@ export default function AddTask({
     setSelectedDate(new Date());
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log(tasks);
+    const projectId = projects.find((proj) => proj.name === projectFolder).id;
 
     if (!title) return;
     const task = {
       title: title,
       description: description,
-      folder: [projectFolder],
+      folder: projectFolder,
+      projectId: projectId,
       date: selectedDate,
       formattedDate: selectedDate.toLocaleDateString("en-GB"),
     };
 
+    const q = query(projectsRef, where("name", "==", projectFolder));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      task.projectId = doc.id;
+    });
+
     clearForm();
     createTask(task);
-    setCurrentProject(task.folder[0]);
+    setCurrentProject(task.folder);
   }
 
   async function createTask(task) {
-    const currentDate = new Date().toLocaleDateString("en-GB");
-    const tasksRef = collection(db, "tasks");
-
-    if (task.formattedDate === currentDate) {
-      task.folder = [...task.folder, "today"];
-    }
+    // const currentDate = new Date().toLocaleDateString("en-GB");
+    // const tasksRef = collection(db, "tasks");
 
     await addDoc(tasksRef, { ...task });
   }
+
+  useEffect(() => {
+    async function getProjects() {
+      const proj = await getDocs(projectsRef);
+      const newProjects = [];
+      proj.forEach((doc) => {
+        newProjects.push({ ...doc.id, ...doc.data() });
+      });
+      setProjects(newProjects);
+    }
+
+    getProjects();
+  }, []);
 
   const optionElements = projects
     .filter((item) => item.id !== "today")
