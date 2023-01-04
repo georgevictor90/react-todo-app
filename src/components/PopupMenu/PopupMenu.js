@@ -19,6 +19,7 @@ export default function PopupMenu({
   popupIsOpen,
   togglePopup,
   setProjectToEdit,
+  projectsRef,
 }) {
   const userProjectLinks = projects
     .filter((project) => project.type === "user")
@@ -58,12 +59,12 @@ export default function PopupMenu({
 
   async function deleteProject(id) {
     console.log(id);
-    const projectDoc = doc(db, "projects", id);
+    const projectDoc = doc(projectsRef, id);
     await deleteDoc(projectDoc);
   }
 
   async function editProject(id) {
-    const projectDoc = doc(db, "projects", id);
+    const projectDoc = doc(projectsRef, id);
     const projectData = await (await getDoc(projectDoc)).data();
     setProjectToEdit({ ...projectData, id: id });
     toggleForm();
