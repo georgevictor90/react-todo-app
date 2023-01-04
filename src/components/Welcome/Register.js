@@ -1,3 +1,4 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import React from "react";
 
 function Register({
@@ -6,6 +7,7 @@ function Register({
   isRegistering,
   setIsRegistering,
   clearUserCredentials,
+  createUser,
 }) {
   function handleSubmit(e) {
     e.preventDefault();
@@ -16,7 +18,7 @@ function Register({
       alert("Passwords don't match");
       return;
     }
-    console.log("good");
+    createUser();
   }
 
   function handleClick() {
