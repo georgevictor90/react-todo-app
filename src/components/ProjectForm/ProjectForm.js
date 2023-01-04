@@ -6,11 +6,11 @@ import {
   IoCheckmarkCircleOutline,
   IoListOutline,
 } from "react-icons/io5";
-import { nanoid } from "nanoid";
-import { db } from "../../firebase-config";
-import { collection, addDoc, doc, setDoc } from "firebase/firestore";
+import { addDoc, doc, setDoc } from "firebase/firestore";
 
 export default function ProjectForm({
+  userRef,
+  projectsRef,
   projects,
   setProjects,
   formIsOpen,
@@ -58,14 +58,11 @@ export default function ProjectForm({
 
   async function saveChangesToProject(id, project) {
     console.log(project);
-    const projectRef = doc(db, "projects", id);
+    const projectRef = doc(projectsRef, id);
     await setDoc(projectRef, project);
   }
 
   async function createProject(project) {
-    // const currentDate = new Date().toLocaleDateString("en-GB");
-    const projectsRef = collection(db, "projects");
-
     await addDoc(projectsRef, { ...project });
   }
 
