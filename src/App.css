@@ -66,11 +66,24 @@ button {
 
 .App-header {
   text-align: left;
+  display: flex;
+  justify-content: space-between;
 }
 
 .App-header > h3 {
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--secondary);
+}
+
+.App-header .signout-button {
+  /* width: 80px; */
+  padding: 8px 10px;
+  background: var(--primary);
+  color: white;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.8rem;
 }
 
 .App-footer {
