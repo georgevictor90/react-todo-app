@@ -1,6 +1,6 @@
 import React from "react";
 import { SlClose } from "react-icons/sl";
-import { IoDiscSharp } from "react-icons/io5";
+import { IoDiscSharp, IoCloseCircleOutline } from "react-icons/io5";
 import {
   IoFolderOutline,
   IoCalendarOutline,
@@ -75,7 +75,7 @@ export default function PopupMenu({
       className={popupIsOpen ? "popup-menu" : "popup-menu close"}
       role="navigation"
     >
-      <SlClose onClick={togglePopup} className="close-button" />
+      <IoCloseCircleOutline onClick={togglePopup} className="close-button" />
 
       <div className="menu-section">
         <ul className="menu-sections-list">
