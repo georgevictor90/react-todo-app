@@ -20,6 +20,7 @@ function App() {
         <Routes>
           <Route
             path="/"
+            exact
             element={
               <Welcome
                 currentUser={currentUser}
@@ -29,6 +30,7 @@ function App() {
           />
           <Route
             path="/dashboard"
+            exact
             element={<Dashboard currentUser={currentUser} />}
           />
         </Routes>
