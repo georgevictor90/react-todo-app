@@ -280,6 +280,10 @@ button {
   padding: 6px;
 }
 
+.react-datepicker-wrapper {
+  width: auto;
+}
+
 .due-date-button,
 .folder-select-button {
   padding: 0.5rem 0.3rem;
@@ -288,12 +292,19 @@ button {
   border-radius: 10px;
   /* font-size: 0.9em; */
   font-size: 0.9rem;
-  max-width: 170px;
   height: 35px !important;
+}
+
+.folder-select-button {
+  max-width: 140px;
+  padding: 3px 12px;
+  text-overflow: ellipsis;
 }
 
 .due-date-button {
   height: 100%;
+  width: 100px;
+  text-align: center;
 }
 
 .submit-button {
@@ -311,10 +322,14 @@ button {
   font-size: 1.5rem;
 }
 .submit-button-icon,
-.manage-projects-icon,
 .icon {
   font-size: 1.5rem;
   opacity: 0.6;
+}
+
+.manage-projects-icon {
+  opacity: 0.6;
+  font-size: 0.8rem;
 }
 
 /* //////////// POPUP MENU */
@@ -370,6 +385,7 @@ button {
 
 .section-icon {
   font-size: 1.5rem;
+  flex-shrink: 0;
 }
 
 .projects-section {
@@ -435,7 +451,7 @@ button {
 }
 
 .manage-projects-button {
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   display: flex;
   gap: 5px;
   align-items: center;
@@ -446,6 +462,7 @@ button {
 /* ///////////NEW PROJECT FORM */
 .new-project-form,
 .edit-project-form {
+  display: block;
   z-index: 90;
   box-sizing: border-box;
   position: absolute;
@@ -465,6 +482,7 @@ button {
 .close-edit-project-form {
   transform: translateX(100%);
   opacity: 0;
+  display: none;
 }
 .new-project-form-header,
 .edit-project-form-header {
