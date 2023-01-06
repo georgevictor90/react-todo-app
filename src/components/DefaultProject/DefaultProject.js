@@ -4,28 +4,59 @@ import {
   IoRadioButtonOffOutline,
   IoCheckmarkCircleOutline,
 } from "react-icons/io5";
-import { db } from "../../firebase-config";
-import {
-  doc,
-  deleteDoc,
-  collection,
-  query,
-  where,
-  onSnapshot,
-  getDocs,
-} from "firebase/firestore";
+import { doc, deleteDoc, query, where, onSnapshot } from "firebase/firestore";
 
-export default function DefaultProject({
-  currentProject,
-  projects,
-  currentUser,
-  userRef,
-  tasksRef,
-  projectsRef,
-}) {
+export default function DefaultProject({ currentProject, projects, tasksRef }) {
   const [removedCard, setRemovedCard] = useState("");
   const [currentProjectTasks, setCurrentProjectTasks] = useState([]);
   const [currentProjectId, setCurrentProjectId] = useState(null);
+  const [gotTasks, setGotTasks] = useState(null);
+  const [taskCards, setTaskCards] = useState(null);
+
+  useEffect(() => {
+    setGotTasks(true);
+  }, [taskCards]);
+
+  useEffect(() => {
+    const cards = currentProjectTasks.map((task) => {
+      return (
+        <div key={task.id} className="task-card">
+          <div className="task-always-visible">
+            {removedCard !== task.id ? (
+              <IoRadioButtonOffOutline
+                data-id={task.id}
+                onClick={toggleRemove}
+                className="task-circle"
+              />
+            ) : (
+              <IoCheckmarkCircleOutline
+                data-id={task.id}
+                onClick={toggleRemove}
+                className="task-circle"
+              />
+            )}
+            <div
+              style={
+                removedCard === task.id
+                  ? { textDecoration: "line-through" }
+                  : null
+              }
+              className="task-card-title"
+            >
+              {task.title}
+            </div>
+          </div>
+          <div className="task-expandable hidden-element">
+            {task.description && (
+              <p className="task-card-description">{task.description}</p>
+            )}
+            <span className="task-card-description">{task.formattedDate}</span>
+          </div>
+        </div>
+      );
+    });
+    setTaskCards(cards);
+  }, [currentProjectTasks]);
 
   useEffect(() => {
     let q;
@@ -53,44 +84,6 @@ export default function DefaultProject({
     }
   }, [currentProject, projects]);
 
-  const taskCards = currentProjectTasks.map((task) => {
-    return (
-      <div key={task.id} className="task-card">
-        <div className="task-always-visible">
-          {removedCard !== task.id ? (
-            <IoRadioButtonOffOutline
-              data-id={task.id}
-              onClick={toggleRemove}
-              className="task-circle"
-            />
-          ) : (
-            <IoCheckmarkCircleOutline
-              data-id={task.id}
-              onClick={toggleRemove}
-              className="task-circle"
-            />
-          )}
-          <div
-            style={
-              removedCard === task.id
-                ? { textDecoration: "line-through" }
-                : null
-            }
-            className="task-card-title"
-          >
-            {task.title}
-          </div>
-        </div>
-        <div className="task-expandable hidden-element">
-          {task.description && (
-            <p className="task-card-description">{task.description}</p>
-          )}
-          <span className="task-card-description">{task.formattedDate}</span>
-        </div>
-      </div>
-    );
-  });
-
   async function deleteTask(id) {
     const taskDoc = doc(tasksRef, id);
     await deleteDoc(taskDoc);
@@ -107,19 +100,20 @@ export default function DefaultProject({
 
   return (
     <section className="section-content">
-      {taskCards.length ? (
-        <div className="tasks-container">{taskCards}</div>
-      ) : (
-        <div className="section-img-and-info">
-          <img className="section-image" src={Bicycle} alt="No tasks" />
-          <div className="section-content-info">
-            <p className="status-text">
-              {`You're all done for today! \n Congratulations!`}
-            </p>
-            <p className="para-text">Enjoy the rest of the day!</p>
+      {gotTasks &&
+        (taskCards.length ? (
+          <div className="tasks-container">{taskCards}</div>
+        ) : (
+          <div className="section-img-and-info">
+            <img className="section-image" src={Bicycle} alt="No tasks" />
+            <div className="section-content-info">
+              <p className="status-text">
+                {`You're all done for today! \n Congratulations!`}
+              </p>
+              <p className="para-text">Enjoy the rest of the day!</p>
+            </div>
           </div>
-        </div>
-      )}
+        ))}
     </section>
   );
 }
