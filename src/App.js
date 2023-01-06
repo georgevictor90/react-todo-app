@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Welcome from "./components/Welcome/Welcome";
 import Dashboard from "./components/Dashboard/Dashboard";
+import { auth } from "./firebase-config";
 
 function App() {
   const documentHeight = () => {
@@ -13,28 +13,29 @@ function App() {
   documentHeight();
 
   const [currentUser, setCurrentUser] = useState(null);
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    console.log(isReady);
+  }, [isReady]);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log("user is logged");
+        setCurrentUser(user.uid);
+      } else {
+        console.log("user is NOT logged");
+        setCurrentUser(null);
+      }
+      setIsReady(true);
+    });
+  }, []);
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            exact
-            element={
-              <Welcome
-                currentUser={currentUser}
-                setCurrentUser={setCurrentUser}
-              />
-            }
-          />
-          <Route
-            path="/dashboard"
-            exact
-            element={<Dashboard currentUser={currentUser} />}
-          />
-        </Routes>
-      </BrowserRouter>
+      {isReady &&
+        (currentUser ? <Dashboard currentUser={currentUser} /> : <Welcome />)}
     </div>
   );
 }
