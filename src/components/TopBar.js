@@ -1,16 +1,13 @@
 import React from "react";
 import { auth } from "../firebase-config";
 import { signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 
 export default function TopBar({ currentProject }) {
-  const navigate = useNavigate();
-
   function signOutUser() {
     signOut(auth)
       .then(() => {
         console.log("succesfully signed out");
-        navigate("/");
+        localStorage.clear();
       })
       .catch((error) => console.log(error.message));
   }
