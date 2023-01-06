@@ -23,7 +23,6 @@ export default function AddTask({
   currentUser,
   projects,
   setProjects,
-  tasks,
   modalIsOpen,
   toggleModal,
   projectsRef,
@@ -34,7 +33,6 @@ export default function AddTask({
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const userRef = doc(db, "users", currentUser);
-  // const projectsRef = collection(userRef, "projects");
   const tasksRef = collection(userRef, "tasks");
 
   function handleTitleChange(e) {
@@ -83,9 +81,6 @@ export default function AddTask({
   }
 
   async function createTask(task) {
-    // const currentDate = new Date().toLocaleDateString("en-GB");
-    // const tasksRef = collection(db, "tasks");
-
     await addDoc(tasksRef, { ...task });
   }
 
