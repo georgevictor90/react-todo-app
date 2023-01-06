@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Register from "./Register";
 import Login from "./Login";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  // onAuthStateChanged,
 } from "firebase/auth";
 import { auth, db } from "../../firebase-config";
-import { useNavigate } from "react-router-dom";
 import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 
-function Welcome({ currentUser, setCurrentUser }) {
-  const navigate = useNavigate();
+function Welcome() {
   const [isRegistering, setIsRegistering] = useState(true);
   const [userCredentials, setUserCredentials] = useState({
     email: "",
@@ -19,19 +16,6 @@ function Welcome({ currentUser, setCurrentUser }) {
     password: "",
     confirmPassword: "",
   });
-
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigate("/dashboard");
-        console.log("user is logged");
-        setCurrentUser(user.uid);
-      } else {
-        console.log("user is NOT logged");
-        setCurrentUser(null);
-      }
-    });
-  }, []);
 
   function clearUserCredentials() {
     setUserCredentials({
@@ -50,8 +34,6 @@ function Welcome({ currentUser, setCurrentUser }) {
     )
       .then(async (credential) => {
         const user = credential.user;
-        // console.log(user.uid);
-
         setDoc(doc(db, "users", user.uid), {
           email: userCredentials.email,
         })
