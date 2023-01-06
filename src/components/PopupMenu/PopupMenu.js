@@ -1,5 +1,4 @@
 import React from "react";
-import { SlClose } from "react-icons/sl";
 import { IoDiscSharp, IoCloseCircleOutline } from "react-icons/io5";
 import {
   IoFolderOutline,
@@ -9,7 +8,6 @@ import {
   IoTrashBinOutline,
   IoCreateOutline,
 } from "react-icons/io5";
-import { db } from "../../firebase-config";
 import { doc, deleteDoc, getDoc } from "firebase/firestore";
 
 export default function PopupMenu({
@@ -113,7 +111,7 @@ export default function PopupMenu({
         <ul className="projects-section-list">{userProjectLinks}</ul>
         <div className="manage-projects-button">
           <IoSettingsOutline className="manage-projects-icon" />
-          <span>Hover projects to edit or delete</span>
+          <span>Hover over projects to edit/delete</span>
         </div>
       </div>
     </nav>

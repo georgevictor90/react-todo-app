@@ -9,10 +9,7 @@ import {
 import { addDoc, doc, setDoc } from "firebase/firestore";
 
 export default function ProjectForm({
-  userRef,
   projectsRef,
-  projects,
-  setProjects,
   formIsOpen,
   toggleForm,
   projectToEdit,
