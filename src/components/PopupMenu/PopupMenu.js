@@ -56,7 +56,6 @@ export default function PopupMenu({
   }
 
   async function deleteProject(id) {
-    console.log(id);
     const projectDoc = doc(projectsRef, id);
     await deleteDoc(projectDoc);
   }
