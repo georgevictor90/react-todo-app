@@ -58,6 +58,7 @@ export default function PopupMenu({
   async function deleteProject(id) {
     const projectDoc = doc(projectsRef, id);
     await deleteDoc(projectDoc);
+    setCurrentProject("today");
   }
 
   async function editProject(id) {
