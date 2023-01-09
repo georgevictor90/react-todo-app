@@ -12,7 +12,12 @@ export default function Footer({ togglePopup, toggleModal }) {
       <button onClick={toggleModal} className="plus-button">
         +
       </button>
-      <a href="http://github.com">
+      <span>developed by Victor Lacatus</span>
+      <a
+        href="http://github.com/georgevictor90"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <FaGithubSquare className="github-icon" />
       </a>
     </footer>
