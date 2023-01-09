@@ -65,6 +65,7 @@ function Dashboard({ currentUser }) {
           projectToEdit={projectToEdit}
           formIsOpen={formIsOpen}
           toggleForm={toggleForm}
+          setCurrentProject={setCurrentProject}
         />
         <TopBar currentProject={currentProject} />
 
@@ -79,6 +80,7 @@ function Dashboard({ currentUser }) {
           projects={projects}
           currentUser={currentUser}
           setProjects={setProjects}
+          currentProject={currentProject}
           setCurrentProject={setCurrentProject}
           modalIsOpen={modalIsOpen}
           toggleModal={toggleModal}
