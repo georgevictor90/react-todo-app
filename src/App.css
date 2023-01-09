@@ -336,7 +336,7 @@ button {
 .popup-menu,
 .manage-projects {
   z-index: 1;
-  overflow: scroll;
+  overflow: auto;
   box-sizing: border-box;
   position: absolute;
   bottom: 0;
@@ -707,9 +707,11 @@ button {
 
   .App {
     padding-left: 300px;
+    /* border: 2px dashed black; */
   }
 
-  .App:has(.close) {
+  .App:has(.close),
+  .App:has(.welcome) {
     padding: 0;
   }
 
