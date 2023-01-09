@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Bicycle from "./bicycle.svg";
+import Inbox from "./inbox.svg";
+import Project from "./undraw-project-src.svg";
+// `You're all done for today! \n Congratulations!`
+
 import {
   IoRadioButtonOffOutline,
   IoCheckmarkCircleOutline,
@@ -12,6 +16,9 @@ export default function DefaultProject({ currentProject, projects, tasksRef }) {
   const [currentProjectId, setCurrentProjectId] = useState(null);
   const [gotTasks, setGotTasks] = useState(null);
   const [taskCards, setTaskCards] = useState(null);
+  const [status, setStatus] = useState(
+    `What are you planning to get done ? \n Press "+" to add new tasks!`
+  );
 
   useEffect(() => {
     setGotTasks(true);
@@ -105,12 +112,10 @@ export default function DefaultProject({ currentProject, projects, tasksRef }) {
           <div className="tasks-container">{taskCards}</div>
         ) : (
           <div className="section-img-and-info">
-            <img className="section-image" src={Bicycle} alt="No tasks" />
+            <img className="section-image" src={Project} alt="No tasks" />
             <div className="section-content-info">
-              <p className="status-text">
-                {`You're all done for today! \n Congratulations!`}
-              </p>
-              <p className="para-text">Enjoy the rest of the day!</p>
+              <p className="status-text">{status}</p>
+              {/* <p className="para-text">Enjoy the rest of the day!</p> */}
             </div>
           </div>
         ))}
