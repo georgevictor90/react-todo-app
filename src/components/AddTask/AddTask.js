@@ -19,6 +19,7 @@ import "react-datepicker/dist/react-datepicker.css";
 Modal.setAppElement("#root");
 
 export default function AddTask({
+  currentProject,
   setCurrentProject,
   currentUser,
   projects,
@@ -29,8 +30,12 @@ export default function AddTask({
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [projectFolder, setProjectFolder] = useState("inbox");
+  const [projectFolder, setProjectFolder] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
+
+  useEffect(() => {
+    setProjectFolder(currentProject);
+  }, [currentProject]);
 
   const userRef = doc(db, "users", currentUser);
   const tasksRef = collection(userRef, "tasks");
@@ -50,7 +55,7 @@ export default function AddTask({
   function clearForm() {
     setTitle("");
     setDescription("");
-    setProjectFolder("inbox");
+    setProjectFolder(currentProject);
     setSelectedDate(new Date());
   }
 
@@ -75,9 +80,9 @@ export default function AddTask({
       task.projectId = doc.id;
     });
 
-    clearForm();
-    createTask(task);
     setCurrentProject(task.folder);
+    createTask(task);
+    clearForm();
   }
 
   async function createTask(task) {
