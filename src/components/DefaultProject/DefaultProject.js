@@ -27,7 +27,7 @@ export default function DefaultProject({ currentProject, projects, tasksRef }) {
   useEffect(() => {
     const cards = currentProjectTasks.map((task) => {
       return (
-        <div key={task.id} className="task-card">
+        <div key={task.id} id={task.id} className="task-card">
           <div className="task-always-visible">
             {removedCard !== task.id ? (
               <IoRadioButtonOffOutline
@@ -63,7 +63,7 @@ export default function DefaultProject({ currentProject, projects, tasksRef }) {
       );
     });
     setTaskCards(cards);
-  }, [currentProjectTasks]);
+  }, [currentProjectTasks, removedCard]);
 
   useEffect(() => {
     let q;
