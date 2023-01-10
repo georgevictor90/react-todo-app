@@ -34,6 +34,13 @@ function Dashboard({ currentUser }) {
     return () => unsub();
   }, []);
 
+  useEffect(() => {
+    if (!projects) return;
+    if (!projects.find((proj) => proj.name === currentProject)) {
+      setCurrentProject("today");
+    }
+  }, []);
+
   function toggleModal() {
     setModalIsOpen(!modalIsOpen);
   }
