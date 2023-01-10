@@ -34,7 +34,11 @@ export default function AddTask({
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
-    setProjectFolder(currentProject);
+    if (currentProject === "today") {
+      setProjectFolder("inbox");
+    } else {
+      setProjectFolder(currentProject);
+    }
   }, [currentProject]);
 
   const userRef = doc(db, "users", currentUser);
@@ -61,6 +65,7 @@ export default function AddTask({
 
   async function handleSubmit(e) {
     e.preventDefault();
+    console.log(projectFolder);
     const projectId = projects.find((proj) => proj.name === projectFolder).id;
 
     if (!title) return;
