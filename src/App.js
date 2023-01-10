@@ -16,10 +16,6 @@ function App() {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    console.log(isReady);
-  }, [isReady]);
-
-  useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         console.log("user is logged");
