@@ -15,6 +15,7 @@ export default function ProjectForm({
   projectToEdit,
   setProjectToEdit,
   setCurrentProject,
+  togglePopup,
 }) {
   const [name, setName] = useState("");
   const [color, setColor] = useState("Charcoal");
@@ -53,6 +54,7 @@ export default function ProjectForm({
     }
     resetProjectForm();
     toggleForm();
+    togglePopup();
   }
 
   async function saveChangesToProject(id, project) {
