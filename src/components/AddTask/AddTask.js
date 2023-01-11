@@ -65,7 +65,6 @@ export default function AddTask({
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(projectFolder);
     const projectId = projects.find((proj) => proj.name === projectFolder).id;
 
     if (!title) return;

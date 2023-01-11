@@ -27,7 +27,6 @@ export default function ProjectForm({
       setName(projectToEdit.name);
       setColor(projectToEdit.color);
       setColorCode(projectToEdit.colorCode);
-      console.log(projectToEdit.id);
     }
   }, [projectToEdit]);
 
@@ -58,7 +57,6 @@ export default function ProjectForm({
   }
 
   async function saveChangesToProject(id, project) {
-    console.log(project);
     const projectRef = doc(projectsRef, id);
     await setDoc(projectRef, project);
   }

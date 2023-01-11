@@ -6,7 +6,6 @@ export default function TopBar({ currentProject }) {
   function signOutUser() {
     signOut(auth)
       .then(() => {
-        console.log("succesfully signed out");
         localStorage.clear();
       })
       .catch((error) => console.log(error.message));

@@ -18,10 +18,8 @@ function App() {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log("user is logged");
         setCurrentUser(user.uid);
       } else {
-        console.log("user is NOT logged");
         setCurrentUser(null);
       }
       setIsReady(true);
