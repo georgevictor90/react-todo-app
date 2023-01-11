@@ -46,15 +46,6 @@ button {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .App-header,
 .App-footer {
   width: 100%;
@@ -701,6 +692,14 @@ button {
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: underline;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  border: 1px dashed red;
+  margin-top: 1rem;
+  padding: 0.5rem;
 }
 /* //////////////////////////////// */
 
