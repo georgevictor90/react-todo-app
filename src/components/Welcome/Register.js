@@ -8,14 +8,19 @@ function Register({
   setIsRegistering,
   clearUserCredentials,
   createUser,
+  registerErr,
+  setRegisterErr,
 }) {
   function handleSubmit(e) {
     e.preventDefault();
     if (userCredentials.email !== userCredentials.confirmEmail) {
-      alert("Email addresses are not the same");
+      setRegisterErr("Email addresses are not the same");
+      return;
+    } else if (userCredentials.password.length < 6) {
+      setRegisterErr("Passwords should be at least 6 characters long");
       return;
     } else if (userCredentials.password !== userCredentials.confirmPassword) {
-      alert("Passwords don't match");
+      setRegisterErr("Passwords don't match");
       return;
     }
     createUser();
@@ -85,6 +90,7 @@ function Register({
           }
           value={userCredentials.confirmPassword || ""}
         />
+        {registerErr && <p className="error-message">{registerErr}</p>}
         <button className="auth-button" onClick={handleSubmit}>
           Register
         </button>

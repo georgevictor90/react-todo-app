@@ -17,6 +17,9 @@ function Welcome() {
     confirmPassword: "",
   });
 
+  const [loginErr, setLoginErr] = useState("");
+  const [registerErr, setRegisterErr] = useState("");
+
   function clearUserCredentials() {
     setUserCredentials({
       email: "",
@@ -50,7 +53,20 @@ function Welcome() {
         });
       })
       .catch((error) => {
-        console.log(error.message);
+        switch (error.code) {
+          case "auth/invalid-email":
+            setRegisterErr("Error: Invalid email");
+            break;
+
+          case "auth/weak-password":
+            setRegisterErr("Error: Password should be at least 6 characters");
+            break;
+          default:
+            console.log(error.message);
+            break;
+        }
+        // console.log(error.message);
+        // setRegisterErr(error.message);
       });
   }
 
@@ -65,7 +81,25 @@ function Welcome() {
         console.log(user.uid);
       })
       .catch((error) => {
-        console.log(error.message);
+        switch (error.code) {
+          case "auth/user-not-found":
+            setLoginErr("Error: User not found");
+            break;
+
+          case "auth/wrong-password":
+            setLoginErr("Error: Wrong password");
+            break;
+
+          case "auth/invalid-email":
+            setLoginErr("Error: Invalid email");
+            break;
+
+          default:
+            console.log(error.message);
+            break;
+        }
+        // console.log(error.code);
+        // setLoginErr(error.message);
       });
   }
 
@@ -80,6 +114,8 @@ function Welcome() {
           setIsRegistering={setIsRegistering}
           clearUserCredentials={clearUserCredentials}
           createUser={createUser}
+          registerErr={registerErr}
+          setRegisterErr={setRegisterErr}
         />
       ) : (
         <Login
@@ -89,6 +125,8 @@ function Welcome() {
           setIsRegistering={setIsRegistering}
           clearUserCredentials={clearUserCredentials}
           signIn={signIn}
+          loginErr={loginErr}
+          setLoginErr={setLoginErr}
         />
       )}
     </div>

@@ -7,6 +7,8 @@ function Login({
   setIsRegistering,
   clearUserCredentials,
   signIn,
+  loginErr,
+  setLoginErr,
 }) {
   function handleClick() {
     clearUserCredentials();
@@ -15,7 +17,10 @@ function Login({
 
   function signInUser(e) {
     e.preventDefault();
-    if (userCredentials.email === "" || userCredentials.password === "") return;
+    if (userCredentials.email === "" || userCredentials.password === "") {
+      setLoginErr("Error: All fields are required");
+      return;
+    }
     signIn();
   }
 
@@ -50,7 +55,7 @@ function Login({
           }
           value={userCredentials.password || ""}
         />
-
+        {loginErr && <p className="error-message">{loginErr}</p>}
         <button className="auth-button" onClick={signInUser}>
           Sign In
         </button>
