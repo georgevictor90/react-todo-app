@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/react-todo-app/static/css/main.434717fc.css",
+    "main.js": "/react-todo-app/static/js/main.4a44e662.js",
+    "static/js/787.7f2c2da0.chunk.js": "/react-todo-app/static/js/787.7f2c2da0.chunk.js",
+    "static/media/bicycle.svg": "/react-todo-app/static/media/bicycle.8b9423fabdf3569ffd849d052b3b11fe.svg",
+    "static/media/undraw-project-src.svg": "/react-todo-app/static/media/undraw-project-src.097258c734772c3c39808345e7d43a0d.svg",
+    "static/media/inbox.svg": "/react-todo-app/static/media/inbox.4fe98a9b514f54c5378aaf89892466c1.svg",
+    "index.html": "/react-todo-app/index.html",
+    "main.434717fc.css.map": "/react-todo-app/static/css/main.434717fc.css.map",
+    "main.4a44e662.js.map": "/react-todo-app/static/js/main.4a44e662.js.map",
+    "787.7f2c2da0.chunk.js.map": "/react-todo-app/static/js/787.7f2c2da0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.434717fc.css",
+    "static/js/main.4a44e662.js"
+  ]
+}
