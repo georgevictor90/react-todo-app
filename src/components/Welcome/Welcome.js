@@ -48,7 +48,7 @@ function Welcome() {
           );
 
         const userRef = doc(db, "users", user.uid);
-        const inbox = await addDoc(collection(userRef, "projects"), {
+        await addDoc(collection(userRef, "projects"), {
           name: "inbox",
         });
       })
@@ -65,8 +65,6 @@ function Welcome() {
             console.log(error.message);
             break;
         }
-        // console.log(error.message);
-        // setRegisterErr(error.message);
       });
   }
 
@@ -98,8 +96,6 @@ function Welcome() {
             console.log(error.message);
             break;
         }
-        // console.log(error.code);
-        // setLoginErr(error.message);
       });
   }
 
