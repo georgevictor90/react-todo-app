@@ -1,4 +1,3 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import React from "react";
 
 function Register({
