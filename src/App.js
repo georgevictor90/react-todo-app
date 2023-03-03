@@ -9,11 +9,18 @@ function App() {
     const doc = document.documentElement;
     doc.style.setProperty("--doc-height", `${window.innerHeight}px`);
   };
-  window.addEventListener("resize", documentHeight);
-  documentHeight();
 
   const [currentUser, setCurrentUser] = useState(null);
   const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    documentHeight();
+    window.addEventListener("resize", documentHeight);
+
+    return () => {
+      window.removeEventListener("resize", documentHeight);
+    };
+  }, []);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
