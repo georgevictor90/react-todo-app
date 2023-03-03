@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PopupMenu from "../PopupMenu/PopupMenu";
 import ProjectForm from "../ProjectForm/ProjectForm";
 import TopBar from "../TopBar";
 import DefaultProject from "../DefaultProject/DefaultProject";
 import AddTask from "../AddTask/AddTask";
 import Footer from "../Footer";
-import { useState, useEffect } from "react";
 import { db } from "../../firebase-config";
 import { collection, doc, onSnapshot } from "firebase/firestore";
 
