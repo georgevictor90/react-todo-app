@@ -35,7 +35,7 @@ function Welcome() {
       userCredentials.email,
       userCredentials.password
     )
-      .then(async (credential) => {
+      .then((credential) => {
         const user = credential.user;
         setDoc(doc(db, "users", user.uid), {
           email: userCredentials.email,
@@ -48,7 +48,7 @@ function Welcome() {
           );
 
         const userRef = doc(db, "users", user.uid);
-        await addDoc(collection(userRef, "projects"), {
+        addDoc(collection(userRef, "projects"), {
           name: "inbox",
         });
       })
