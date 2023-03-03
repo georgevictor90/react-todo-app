@@ -1,33 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
+import { collection, addDoc, doc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../firebase-config";
 
-function Register({
-  userCredentials,
-  setUserCredentials,
-  isRegistering,
-  setIsRegistering,
-  clearUserCredentials,
-  createUser,
-  registerErr,
-  setRegisterErr,
-}) {
+function Register({ setIsRegistering }) {
+  const [email, setEmail] = useState("");
+  const [confirmEmail, setConfirmEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  function createUser() {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((credential) => {
+        const user = credential.user;
+        setDoc(doc(db, "users", user.uid), {
+          email: email,
+        })
+          .then(() => console.log("stored user"))
+          .catch((error) =>
+            console.log(
+              "Something went wrong with storing user: " + error.message
+            )
+          );
+
+        const userRef = doc(db, "users", user.uid);
+        addDoc(collection(userRef, "projects"), {
+          name: "inbox",
+        });
+      })
+      .catch((error) => {
+        switch (error.code) {
+          case "auth/invalid-email":
+            setErrorMsg("Error: Invalid email");
+            break;
+
+          case "auth/weak-password":
+            setErrorMsg("Error: Password should be at least 6 characters");
+            break;
+          default:
+            console.log(error.message);
+            break;
+        }
+      });
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
-    if (userCredentials.email !== userCredentials.confirmEmail) {
-      setRegisterErr("Email addresses are not the same");
+    if (email !== confirmEmail) {
+      setErrorMsg("Email addresses are not the same");
       return;
-    } else if (userCredentials.password.length < 6) {
-      setRegisterErr("Passwords should be at least 6 characters long");
+    } else if (password.length < 6) {
+      setErrorMsg("Passwords should be at least 6 characters long");
       return;
-    } else if (userCredentials.password !== userCredentials.confirmPassword) {
-      setRegisterErr("Passwords don't match");
+    } else if (password !== confirmPassword) {
+      setErrorMsg("Passwords don't match");
       return;
     }
     createUser();
-  }
-
-  function handleClick() {
-    clearUserCredentials();
-    setIsRegistering(!isRegistering);
   }
 
   return (
@@ -40,10 +70,11 @@ function Register({
           id="email"
           placeholder="Email"
           required
-          onChange={(e) =>
-            setUserCredentials({ ...userCredentials, email: e.target.value })
-          }
-          value={userCredentials.email || ""}
+          onChange={(e) => {
+            setErrorMsg("");
+            setEmail(e.target.value);
+          }}
+          value={email || ""}
         />
         <input
           type="email"
@@ -51,13 +82,11 @@ function Register({
           id="confirmEmail"
           placeholder="Confirm Email"
           required
-          onChange={(e) =>
-            setUserCredentials({
-              ...userCredentials,
-              confirmEmail: e.target.value,
-            })
-          }
-          value={userCredentials.confirmEmail || ""}
+          onChange={(e) => {
+            setErrorMsg("");
+            setConfirmEmail(e.target.value);
+          }}
+          value={confirmEmail || ""}
         />
         <input
           type="password"
@@ -66,13 +95,11 @@ function Register({
           placeholder="Password"
           autoComplete="new-password"
           required
-          onChange={(e) =>
-            setUserCredentials({
-              ...userCredentials,
-              password: e.target.value,
-            })
-          }
-          value={userCredentials.password || ""}
+          onChange={(e) => {
+            setErrorMsg("");
+            setPassword(e.target.value);
+          }}
+          value={password || ""}
         />
         <input
           type="password"
@@ -81,21 +108,24 @@ function Register({
           placeholder="Confirm Password"
           autoComplete="new-password"
           required
-          onChange={(e) =>
-            setUserCredentials({
-              ...userCredentials,
-              confirmPassword: e.target.value,
-            })
-          }
-          value={userCredentials.confirmPassword || ""}
+          onChange={(e) => {
+            setErrorMsg("");
+            setConfirmPassword(e.target.value);
+          }}
+          value={confirmPassword || ""}
         />
-        {registerErr && <p className="error-message">{registerErr}</p>}
-        <button className="auth-button" onClick={handleSubmit}>
+        {errorMsg && <p className="error-message">{errorMsg}</p>}
+        <button type="submit" className="auth-button" onClick={handleSubmit}>
           Register
         </button>
         <span>
           Already registered?{" "}
-          <button className="signin-link" onClick={handleClick} href="#">
+          <button
+            type="button"
+            className="signin-link"
+            onClick={() => setIsRegistering(false)}
+            href="#"
+          >
             Sign in
           </button>
         </span>

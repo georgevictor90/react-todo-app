@@ -1,24 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase-config";
 
-function Login({
-  userCredentials,
-  setUserCredentials,
-  isRegistering,
-  setIsRegistering,
-  clearUserCredentials,
-  signIn,
-  loginErr,
-  setLoginErr,
-}) {
-  function handleClick() {
-    clearUserCredentials();
-    setIsRegistering(!isRegistering);
+function Login({ setIsRegistering }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  function signIn() {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((credential) => {
+        const user = credential.user;
+        console.log(user.uid);
+      })
+      .catch((error) => {
+        switch (error.code) {
+          case "auth/user-not-found":
+            setErrorMsg("Error: User not found");
+            break;
+
+          case "auth/wrong-password":
+            setErrorMsg("Error: Wrong password");
+            break;
+
+          case "auth/invalid-email":
+            setErrorMsg("Error: Invalid email");
+            break;
+
+          default:
+            console.log(error.message);
+            break;
+        }
+      });
   }
 
-  function signInUser(e) {
+  function handleLogin(e) {
     e.preventDefault();
-    if (userCredentials.email === "" || userCredentials.password === "") {
-      setLoginErr("Error: All fields are required");
+    if (email === "" || password === "") {
+      setErrorMsg("Error: All fields are required");
       return;
     }
     signIn();
@@ -34,10 +53,11 @@ function Login({
           id="email"
           placeholder="Email"
           required
-          onChange={(e) =>
-            setUserCredentials({ ...userCredentials, email: e.target.value })
-          }
-          value={userCredentials.email || ""}
+          onChange={(e) => {
+            setErrorMsg("");
+            setEmail(e.target.value);
+          }}
+          value={email || ""}
         />
 
         <input
@@ -47,21 +67,24 @@ function Login({
           placeholder="Password"
           autoComplete="new-password"
           required
-          onChange={(e) =>
-            setUserCredentials({
-              ...userCredentials,
-              password: e.target.value,
-            })
-          }
-          value={userCredentials.password || ""}
+          onChange={(e) => {
+            setErrorMsg("");
+            setPassword(e.target.value);
+          }}
+          value={password || ""}
         />
-        {loginErr && <p className="error-message">{loginErr}</p>}
-        <button className="auth-button" onClick={signInUser}>
+        {errorMsg && <p className="error-message">{errorMsg}</p>}
+        <button type="submit" className="auth-button" onClick={handleLogin}>
           Sign In
         </button>
         <span>
           Not registered yet?{" "}
-          <button className="signin-link" onClick={handleClick} href="#">
+          <button
+            type="button"
+            className="signin-link"
+            onClick={() => setIsRegistering(true)}
+            href="#"
+          >
             Register
           </button>
         </span>
