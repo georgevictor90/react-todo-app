@@ -20,12 +20,7 @@ export default function DefaultProject() {
   const [removedCard, setRemovedCard] = useState("");
   const [currentProjectTasks, setCurrentProjectTasks] = useState([]);
   const [currentProjectId, setCurrentProjectId] = useState(null);
-  const [gotTasks, setGotTasks] = useState(null);
-  const [taskCards, setTaskCards] = useState(null);
-
-  useEffect(() => {
-    setGotTasks(true);
-  }, [taskCards]);
+  const [taskCards, setTaskCards] = useState([]);
 
   useEffect(() => {
     const cards = currentProjectTasks.map((task) => {
@@ -118,20 +113,19 @@ export default function DefaultProject() {
 
   return (
     <section className="section-content">
-      {gotTasks &&
-        (taskCards.length ? (
-          <div className="tasks-container">{taskCards}</div>
-        ) : (
-          <div className="section-img-and-info">
-            <img className="section-image" src={Project} alt="No tasks" />
-            <div className="section-content-info">
-              <p className="status-text">
-                What are you planning to get done ? \n Press "+" to add new
-                tasks!
-              </p>
-            </div>
+      {taskCards.length ? (
+        <div className="tasks-container">{taskCards}</div>
+      ) : (
+        <div className="section-img-and-info">
+          <img className="section-image" src={Project} alt="No tasks" />
+          <div className="section-content-info">
+            <p className="status-text">
+              What are you planning to get done ?{"\n"} Press "+" to add new
+              tasks!
+            </p>
           </div>
-        ))}
+        </div>
+      )}
     </section>
   );
 }
