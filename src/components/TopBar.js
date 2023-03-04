@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ProjectsContext } from "./Dashboard/Dashboard";
 import { auth } from "../firebase-config";
 import { signOut } from "firebase/auth";
 
-export default function TopBar({ currentProject }) {
+export default function TopBar() {
+  const { currentProject } = useContext(ProjectsContext);
   function signOutUser() {
     signOut(auth)
       .then(() => {

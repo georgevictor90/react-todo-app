@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import PopupMenu from "../PopupMenu/PopupMenu";
 import ProjectForm from "../ProjectForm/ProjectForm";
 import TopBar from "../TopBar";
@@ -7,6 +7,9 @@ import AddTask from "../AddTask/AddTask";
 import Footer from "../Footer";
 import { db } from "../../firebase-config";
 import { collection, doc, onSnapshot } from "firebase/firestore";
+
+export const ProjectsContext = createContext(null);
+export const TogglersContext = createContext(null);
 
 function Dashboard({ currentUser }) {
   const userRef = doc(db, "users", currentUser);
@@ -54,47 +57,40 @@ function Dashboard({ currentUser }) {
 
   return (
     currentUser && (
-      <>
-        <PopupMenu
-          setProjectToEdit={setProjectToEdit}
-          projects={projects}
-          setCurrentProject={setCurrentProject}
-          toggleForm={toggleForm}
-          popupIsOpen={popupIsOpen}
-          togglePopup={togglePopup}
-          projectsRef={projectsCollectionRef}
-        />
+      <TogglersContext.Provider
+        value={{
+          togglePopup,
+          toggleForm,
+          popupIsOpen,
+          formIsOpen,
+          modalIsOpen,
+          toggleModal,
+        }}
+      >
+        <ProjectsContext.Provider
+          value={{
+            projects,
+            setProjects,
+            currentProject,
+            setCurrentProject,
+            projectToEdit,
+            setProjectToEdit,
+            projectsCollectionRef,
+            tasksRef,
+          }}
+        >
+          <PopupMenu />
 
-        <ProjectForm
-          projectsRef={projectsCollectionRef}
-          setProjectToEdit={setProjectToEdit}
-          projectToEdit={projectToEdit}
-          formIsOpen={formIsOpen}
-          toggleForm={toggleForm}
-          togglePopup={togglePopup}
-          setCurrentProject={setCurrentProject}
-        />
-        <TopBar currentProject={currentProject} />
+          <ProjectForm />
+          <TopBar />
 
-        <DefaultProject
-          currentProject={currentProject}
-          projects={projects}
-          tasksRef={tasksRef}
-        />
+          <DefaultProject />
 
-        <AddTask
-          projectsRef={projectsCollectionRef}
-          projects={projects}
-          currentUser={currentUser}
-          setProjects={setProjects}
-          currentProject={currentProject}
-          setCurrentProject={setCurrentProject}
-          modalIsOpen={modalIsOpen}
-          toggleModal={toggleModal}
-        />
+          <AddTask currentUser={currentUser} />
+        </ProjectsContext.Provider>
 
         <Footer togglePopup={togglePopup} toggleModal={toggleModal} />
-      </>
+      </TogglersContext.Provider>
     )
   );
 }

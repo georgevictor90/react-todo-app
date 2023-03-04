@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { ProjectsContext, TogglersContext } from "../Dashboard/Dashboard";
 import { RxPaperPlane } from "react-icons/rx";
 import { SlClose } from "react-icons/sl";
 import Modal from "react-modal";
@@ -18,16 +19,15 @@ import "react-datepicker/dist/react-datepicker.css";
 
 Modal.setAppElement("#root");
 
-export default function AddTask({
-  currentProject,
-  setCurrentProject,
-  currentUser,
-  projects,
-  setProjects,
-  modalIsOpen,
-  toggleModal,
-  projectsRef,
-}) {
+export default function AddTask({ currentUser }) {
+  const {
+    currentProject,
+    setCurrentProject,
+    projects,
+    setProjects,
+    projectsCollectionRef,
+  } = useContext(ProjectsContext);
+  const { modalIsOpen, toggleModal } = useContext(TogglersContext);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [projectFolder, setProjectFolder] = useState("");
@@ -77,7 +77,7 @@ export default function AddTask({
       formattedDate: selectedDate.toLocaleDateString("en-GB"),
     };
 
-    const q = query(projectsRef, where("name", "==", projectFolder));
+    const q = query(projectsCollectionRef, where("name", "==", projectFolder));
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
@@ -95,7 +95,7 @@ export default function AddTask({
 
   useEffect(() => {
     async function getProjects() {
-      const proj = await getDocs(projectsRef);
+      const proj = await getDocs(projectsCollectionRef);
       const newProjects = [];
       proj.forEach((doc) => {
         newProjects.push({ ...doc.id, ...doc.data() });
@@ -168,7 +168,6 @@ export default function AddTask({
               className="folder-select-button"
             >
               {optionElements}
-              {/* <option value="inbox">Inbox</option> */}
             </select>
           </div>
           <div className="item-actions"></div>

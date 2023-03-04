@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { ProjectsContext } from "../Dashboard/Dashboard";
 import Project from "./undraw-project-src.svg";
 
 import {
   IoRadioButtonOffOutline,
   IoCheckmarkCircleOutline,
 } from "react-icons/io5";
-import { doc, deleteDoc, query, where, onSnapshot } from "firebase/firestore";
+import {
+  doc,
+  deleteDoc,
+  query,
+  where,
+  onSnapshot,
+  orderBy,
+} from "firebase/firestore";
 
-export default function DefaultProject({ currentProject, projects, tasksRef }) {
+export default function DefaultProject() {
+  const { currentProject, projects, tasksRef } = useContext(ProjectsContext);
   const [removedCard, setRemovedCard] = useState("");
   const [currentProjectTasks, setCurrentProjectTasks] = useState([]);
   const [currentProjectId, setCurrentProjectId] = useState(null);
@@ -64,9 +73,17 @@ export default function DefaultProject({ currentProject, projects, tasksRef }) {
 
     if (currentProject === "today") {
       const date = new Date().toLocaleDateString("en-GB");
-      q = query(tasksRef, where("formattedDate", "==", date));
+      q = query(
+        tasksRef,
+        where("formattedDate", "==", date),
+        orderBy("date", "desc")
+      );
     } else {
-      q = query(tasksRef, where("projectId", "==", currentProjectId));
+      q = query(
+        tasksRef,
+        where("projectId", "==", currentProjectId),
+        orderBy("date", "desc")
+      );
     }
 
     const unsub = onSnapshot(q, (querySnapshot) => {

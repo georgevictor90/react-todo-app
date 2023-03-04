@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { TogglersContext } from "./Dashboard/Dashboard";
 import { FaGithubSquare } from "react-icons/fa";
 
-export default function Footer({ togglePopup, toggleModal }) {
+export default function Footer() {
+  const { togglePopup, toggleModal } = useContext(TogglersContext);
   return (
     <footer className="App-footer">
       <button onClick={togglePopup} className="hamburger">

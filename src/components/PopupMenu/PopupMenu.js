@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ProjectsContext, TogglersContext } from "../Dashboard/Dashboard";
 import { IoDiscSharp, IoCloseCircleOutline } from "react-icons/io5";
 import {
   IoFolderOutline,
@@ -10,15 +11,15 @@ import {
 } from "react-icons/io5";
 import { doc, deleteDoc, getDoc } from "firebase/firestore";
 
-export default function PopupMenu({
-  projects,
-  setCurrentProject,
-  toggleForm,
-  popupIsOpen,
-  togglePopup,
-  setProjectToEdit,
-  projectsRef,
-}) {
+export default function PopupMenu() {
+  const {
+    projects,
+    setCurrentProject,
+    setProjectToEdit,
+    projectsCollectionRef,
+  } = useContext(ProjectsContext);
+  const { toggleForm, popupIsOpen, togglePopup } = useContext(TogglersContext);
+
   const userProjectLinks = projects
     .filter((project) => project.type === "user")
     .map((project) => {
@@ -56,14 +57,14 @@ export default function PopupMenu({
   }
 
   async function deleteProject(id) {
-    const projectDoc = doc(projectsRef, id);
+    const projectDoc = doc(projectsCollectionRef, id);
     await deleteDoc(projectDoc);
     setCurrentProject("today");
   }
 
   async function editProject(id) {
-    const projectDoc = doc(projectsRef, id);
-    const projectData = await (await getDoc(projectDoc)).data();
+    const projectDoc = doc(projectsCollectionRef, id);
+    const projectData = await getDoc(projectDoc).data();
     setProjectToEdit({ ...projectData, id: id });
     toggleForm();
   }

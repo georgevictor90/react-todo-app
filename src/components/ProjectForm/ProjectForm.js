@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { ProjectsContext, TogglersContext } from "../Dashboard/Dashboard";
 import ColorChoices from "../ColorChoices/ColorChoices";
-
 import {
   IoArrowBackCircleOutline,
   IoCheckmarkCircleOutline,
@@ -8,15 +8,14 @@ import {
 } from "react-icons/io5";
 import { addDoc, doc, setDoc } from "firebase/firestore";
 
-export default function ProjectForm({
-  projectsRef,
-  formIsOpen,
-  toggleForm,
-  projectToEdit,
-  setProjectToEdit,
-  setCurrentProject,
-  togglePopup,
-}) {
+export default function ProjectForm() {
+  const {
+    projectsCollectionRef,
+    projectToEdit,
+    setProjectToEdit,
+    setCurrentProject,
+  } = useContext(ProjectsContext);
+  const { formIsOpen, toggleForm, togglePopup } = useContext(TogglersContext);
   const [name, setName] = useState("");
   const [color, setColor] = useState("Charcoal");
   const [colorCode, setColorCode] = useState("#36454F");
@@ -57,12 +56,12 @@ export default function ProjectForm({
   }
 
   async function saveChangesToProject(id, project) {
-    const projectRef = doc(projectsRef, id);
+    const projectRef = doc(projectsCollectionRef, id);
     await setDoc(projectRef, project);
   }
 
   async function createProject(project) {
-    await addDoc(projectsRef, { ...project });
+    await addDoc(projectsCollectionRef, { ...project });
   }
 
   function resetProjectForm() {
