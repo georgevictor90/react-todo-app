@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { ProjectsContext, TogglersContext } from "../Dashboard/Dashboard";
 import { RxPaperPlane } from "react-icons/rx";
 import { SlClose } from "react-icons/sl";
@@ -32,6 +32,14 @@ export default function AddTask({ currentUser }) {
   const [description, setDescription] = useState("");
   const [projectFolder, setProjectFolder] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    modalIsOpen &&
+      setTimeout(() => {
+        inputRef.current.focus();
+      }, 250);
+  }, [modalIsOpen]);
 
   useEffect(() => {
     if (currentProject === "today") {
@@ -61,6 +69,9 @@ export default function AddTask({ currentUser }) {
     setDescription("");
     setProjectFolder(currentProject);
     setSelectedDate(new Date());
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
   }
 
   async function handleSubmit(e) {
@@ -131,6 +142,7 @@ export default function AddTask({ currentUser }) {
         <SlClose onClick={toggleModal} className="close-modal" />
         <div className="input-fields">
           <input
+            ref={inputRef}
             type="text"
             name="title"
             id="title"
