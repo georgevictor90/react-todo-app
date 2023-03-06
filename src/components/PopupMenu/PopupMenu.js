@@ -26,18 +26,31 @@ export default function PopupMenu() {
   }
 
   async function handleProjectDelete(id) {
-    if (window.confirm("Are you sure you wish to delete this item?")) {
-      const projectDoc = doc(projectsCollectionRef, id);
-      await deleteDoc(projectDoc);
-      setCurrentProject("today");
+    try {
+      if (window.confirm("Are you sure you wish to delete this item?")) {
+        const projectDoc = doc(projectsCollectionRef, id);
+        await deleteDoc(projectDoc);
+        setCurrentProject("today");
+      }
+    } catch (error) {
+      console.error("Error deleting project:", error);
     }
   }
 
   async function handleProjectEdit(id) {
-    const projectDoc = doc(projectsCollectionRef, id);
-    const projectData = await getDoc(projectDoc).data();
-    setProjectToEdit({ ...projectData, id: id });
-    toggleForm();
+    try {
+      const projectDoc = doc(projectsCollectionRef, id);
+      const projectSnapshot = await getDoc(projectDoc);
+      if (projectSnapshot.exists()) {
+        const projectData = projectSnapshot.data();
+        setProjectToEdit({ ...projectData, id: id });
+        toggleForm();
+      } else {
+        console.error(`Document with id ${id} does not exist.`);
+      }
+    } catch (error) {
+      console.error(`Error fetching document with id ${id}:`, error);
+    }
   }
 
   const userProjects = projects.filter((project) => project.type === "user");
