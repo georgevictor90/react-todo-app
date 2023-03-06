@@ -20,67 +20,68 @@ export default function PopupMenu() {
   } = useContext(ProjectsContext);
   const { toggleForm, popupIsOpen, togglePopup } = useContext(TogglersContext);
 
-  const userProjectLinks = projects
-    .filter((project) => project.type === "user")
-    .map((project) => {
-      return (
-        <li key={project.id} className="project-item">
-          <IoDiscSharp
-            className="section-icon"
-            style={{ color: `${project.colorCode}` }}
-          />
-          <span
-            onClick={() => {
-              handleClick(project.name);
-            }}
-          >
-            {project.name}
-          </span>
-          <div className="edit-project-buttons">
-            <IoCreateOutline onClick={() => editProject(project.id)} />
-            <IoTrashBinOutline
-              onClick={() => {
-                if (
-                  window.confirm("Are you sure you wish to delete this item?")
-                )
-                  deleteProject(project.id);
-              }}
-            />
-          </div>
-        </li>
-      );
-    });
-
-  function handleClick(section) {
-    setCurrentProject(section);
+  function handleProjectClick(projectName) {
+    setCurrentProject(projectName);
     togglePopup();
   }
 
-  async function deleteProject(id) {
-    const projectDoc = doc(projectsCollectionRef, id);
-    await deleteDoc(projectDoc);
-    setCurrentProject("today");
+  async function handleProjectDelete(id) {
+    if (window.confirm("Are you sure you wish to delete this item?")) {
+      const projectDoc = doc(projectsCollectionRef, id);
+      await deleteDoc(projectDoc);
+      setCurrentProject("today");
+    }
   }
 
-  async function editProject(id) {
+  async function handleProjectEdit(id) {
     const projectDoc = doc(projectsCollectionRef, id);
     const projectData = await getDoc(projectDoc).data();
     setProjectToEdit({ ...projectData, id: id });
     toggleForm();
   }
 
+  const userProjects = projects.filter((project) => project.type === "user");
+
+  const userProjectLinks = userProjects.map((project) => {
+    return (
+      <li
+        key={project.id}
+        className="project-item"
+        onClick={() => {
+          handleProjectClick(project.name);
+        }}
+      >
+        <IoDiscSharp
+          className="section-icon"
+          style={{ color: `${project.colorCode}` }}
+        />
+        <span>{project.name}</span>
+        <div className="edit-project-buttons">
+          <IoCreateOutline onClick={() => handleProjectEdit(project.id)} />
+          <IoTrashBinOutline
+            onClick={() => {
+              handleProjectDelete(project.id);
+            }}
+          />
+        </div>
+      </li>
+    );
+  });
+
   return (
     <nav
       className={popupIsOpen ? "popup-menu" : "popup-menu close"}
       role="navigation"
     >
-      <IoCloseCircleOutline onClick={togglePopup} className="close-button" />
+      <button onClick={togglePopup} className="close-button">
+        <IoCloseCircleOutline />
+      </button>
 
       <div className="menu-section">
         <ul className="menu-sections-list">
           <li
             onClick={() => {
-              handleClick("inbox");
+              handleProjectClick("inbox");
             }}
           >
             <IoFolderOutline
@@ -89,9 +90,10 @@ export default function PopupMenu() {
             />
             <span>Inbox</span>
           </li>
+
           <li
             onClick={() => {
-              handleClick("today");
+              handleProjectClick("today");
             }}
           >
             <IoCalendarOutline
@@ -102,6 +104,7 @@ export default function PopupMenu() {
           </li>
         </ul>
       </div>
+
       <div className="projects-section">
         <div className="project-section-header">
           <span className="projects-section-title">Projects</span>
@@ -110,7 +113,7 @@ export default function PopupMenu() {
           </button>
         </div>
         <ul className="projects-section-list">{userProjectLinks}</ul>
-        <div className="manage-projects-button">
+        <div className="manage-projects-info">
           <IoSettingsOutline className="manage-projects-icon" />
           <span>Hover over projects to edit/delete</span>
         </div>
