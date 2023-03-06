@@ -76,8 +76,6 @@ export default function ProjectForm() {
 
   return (
     <form
-      action="
-    "
       className={
         formIsOpen ? "new-project-form" : "new-project-form close-project-form"
       }
@@ -87,7 +85,7 @@ export default function ProjectForm() {
           onClick={toggleForm}
           className="new-project-form-back"
         />
-        <h3 className="new-project-form-h3">Add Project</h3>
+        <h1 className="new-project-form-title">Add Project</h1>
         <IoCheckmarkCircleOutline
           onClick={handleClick}
           className="new-project-form-save"
