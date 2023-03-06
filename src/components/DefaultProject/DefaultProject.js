@@ -23,6 +23,7 @@ export default function DefaultProject() {
   const [taskCards, setTaskCards] = useState([]);
 
   useEffect(() => {
+    ///Create task cards
     const cards = currentProjectTasks.map((task) => {
       return (
         <div key={task.id} id={task.id} className="task-card">
@@ -64,6 +65,7 @@ export default function DefaultProject() {
   }, [currentProjectTasks, removedCard]);
 
   useEffect(() => {
+    ///Queries the database for the current project tasks
     let q;
 
     if (currentProject === "today") {
@@ -91,6 +93,7 @@ export default function DefaultProject() {
   }, [currentProject, currentProjectId, tasksRef]);
 
   useEffect(() => {
+    //Gets the unique id of the current project
     const project = projects.find((proj) => proj.name === currentProject);
     if (project) {
       setCurrentProjectId(project.id);
