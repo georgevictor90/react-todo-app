@@ -16,16 +16,18 @@ export default function ColorChoices({
 
   const colorChoicesElements = colors.map((color) => {
     return (
-      <li
-        key={color.name}
-        onClick={() => handleClick(color.name, color.code)}
-        className="color-list-item"
-      >
-        <IoListOutline
-          style={{ color: `${color.code}` }}
-          className="color-icon"
-        />
-        <span>{color.name}</span>
+      <li key={color.name}>
+        <button
+          type="button"
+          className="color-list-button"
+          onClick={() => handleClick(color.name, color.code)}
+        >
+          <IoListOutline
+            style={{ color: `${color.code}` }}
+            className="color-icon"
+          />
+          <span>{color.name}</span>
+        </button>
       </li>
     );
   });

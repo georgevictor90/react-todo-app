@@ -57,26 +57,27 @@ export default function PopupMenu() {
 
   const userProjectLinks = userProjects.map((project) => {
     return (
-      <li
-        key={project.id}
-        className="project-item"
-        onClick={() => {
-          handleProjectClick(project.name);
-        }}
-      >
-        <IoDiscSharp
-          className="section-icon"
-          style={{ color: `${project.colorCode}` }}
-        />
-        <span>{project.name}</span>
-        <div className="edit-project-buttons">
-          <IoCreateOutline onClick={() => handleProjectEdit(project.id)} />
-          <IoTrashBinOutline
-            onClick={() => {
-              handleProjectDelete(project.id);
-            }}
+      <li key={project.id} className="project-item">
+        <button
+          className="project-item-button"
+          onClick={() => {
+            handleProjectClick(project.name);
+          }}
+        >
+          <IoDiscSharp
+            className="section-icon"
+            style={{ color: `${project.colorCode}` }}
           />
-        </div>
+          <span>{project.name}</span>
+          <div className="edit-project-buttons">
+            <IoCreateOutline onClick={() => handleProjectEdit(project.id)} />
+            <IoTrashBinOutline
+              onClick={() => {
+                handleProjectDelete(project.id);
+              }}
+            />
+          </div>
+        </button>
       </li>
     );
   });
@@ -92,28 +93,32 @@ export default function PopupMenu() {
 
       <div className="menu-section">
         <ul className="menu-sections-list">
-          <li
-            onClick={() => {
-              handleProjectClick("inbox");
-            }}
-          >
-            <IoFolderOutline
-              style={{ color: "blue" }}
-              className="section-icon"
-            />
-            <span>Inbox</span>
+          <li>
+            <button
+              onClick={() => {
+                handleProjectClick("inbox");
+              }}
+            >
+              <IoFolderOutline
+                style={{ color: "blue" }}
+                className="section-icon"
+              />
+              <span>Inbox</span>
+            </button>
           </li>
 
-          <li
-            onClick={() => {
-              handleProjectClick("today");
-            }}
-          >
-            <IoCalendarOutline
-              style={{ color: "green" }}
-              className="section-icon"
-            />
-            <span>Today</span>
+          <li>
+            <button
+              onClick={() => {
+                handleProjectClick("today");
+              }}
+            >
+              <IoCalendarOutline
+                style={{ color: "green" }}
+                className="section-icon"
+              />
+              <span>Today</span>
+            </button>
           </li>
         </ul>
       </div>
@@ -122,7 +127,8 @@ export default function PopupMenu() {
         <div className="project-section-header">
           <span className="projects-section-title">Projects</span>
           <button onClick={toggleForm} className="new-project-button">
-            <IoAddCircleOutline />
+            add new
+            <IoAddCircleOutline className="section-icon" />
           </button>
         </div>
         <ul className="projects-section-list">{userProjectLinks}</ul>

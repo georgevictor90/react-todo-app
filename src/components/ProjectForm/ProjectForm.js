@@ -104,7 +104,11 @@ export default function ProjectForm() {
           onChange={handleChange}
         />
       </div>
-      <div onClick={toggleColorChoices} className="color-form-group">
+      <button
+        type="button"
+        onClick={toggleColorChoices}
+        className="color-form-group"
+      >
         <IoListOutline
           style={{ color: `${colorCode}` }}
           className="color-icon main-color-icon"
@@ -113,7 +117,7 @@ export default function ProjectForm() {
           <span className="selected-color-label">Color</span>
           <span className="selected-project-color">{color}</span>
         </div>
-      </div>
+      </button>
 
       <ColorChoices
         setColorCode={setColorCode}
