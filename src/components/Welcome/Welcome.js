@@ -3,7 +3,7 @@ import Register from "./Register";
 import Login from "./Login";
 
 function Welcome() {
-  const [isRegistering, setIsRegistering] = useState(true);
+  const [isRegistering, setIsRegistering] = useState(false);
 
   return (
     <div className="welcome">
