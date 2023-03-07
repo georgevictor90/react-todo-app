@@ -28,6 +28,9 @@ button {
   background: none;
   border: none;
 }
+li {
+  list-style: none;
+}
 
 .App {
   text-align: center;
@@ -39,7 +42,6 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  /* font-size: calc(10px + 1vmin); */
 }
 
 .App-link {
@@ -68,7 +70,6 @@ button {
 }
 
 .App-header .signout-button {
-  /* width: 80px; */
   padding: 8px 10px;
   background: var(--primary);
   color: white;
@@ -163,13 +164,11 @@ button {
   width: 100%;
   text-align: center;
   line-height: 2;
-  /* font-size: 1.1em; */
   font-size: 1.1rem;
   font-weight: 300;
 }
 
 .para-text {
-  /* font-size: 0.8em; */
   font-size: 0.8rem;
   font-weight: 400;
   opacity: 0.5;
@@ -209,10 +208,6 @@ button {
   flex-direction: column;
 }
 
-.hidden-element {
-  /* display: none; */
-}
-
 .task-circle {
   font-size: 1rem;
 }
@@ -238,7 +233,6 @@ button {
 
 .close-modal {
   grid-column: 2/3;
-  /* font-size: 1.5em; */
   font-size: 1.5rem;
   background: transparent;
   border: none;
@@ -270,7 +264,6 @@ button {
   padding: 10px;
 }
 .task-description-input {
-  /* font-size: 0.8em; */
   font-size: 0.8rem;
   height: 7ch;
   resize: none;
@@ -292,7 +285,6 @@ button {
   background-color: transparent;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  /* font-size: 0.9em; */
   font-size: 0.9rem;
   height: 35px !important;
 }
@@ -320,18 +312,12 @@ button {
   align-self: flex-end;
 }
 .submit-button-icon {
-  /* font-size: 1.5em; */
   font-size: 1.5rem;
 }
 .submit-button-icon,
 .icon {
   font-size: 1.5rem;
   opacity: 0.6;
-}
-
-.manage-projects-icon {
-  opacity: 0.6;
-  font-size: 0.8rem;
 }
 
 /* //////////// POPUP MENU */
@@ -346,8 +332,6 @@ button {
   height: 100%;
   width: 100%;
   border: 1px solid #f0f0f0;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
   padding: 20px;
   opacity: 1;
   transition: all 400ms ease;
@@ -375,14 +359,25 @@ button {
   padding-left: 10px;
 }
 
+.menu-sections-list {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.1rem;
+}
+
 .menu-sections-list li {
+  display: block;
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+.menu-sections-list button {
+  color: var(--secondary);
   display: flex;
   align-items: center;
   gap: 7px;
-  text-decoration: none;
-  color: var(--secondary);
-  margin-top: 20px;
-  list-style: none;
+  font-size: 1.1rem;
+  padding: 4px;
 }
 
 .section-icon {
@@ -401,14 +396,19 @@ button {
 }
 
 .new-project-button {
-  font-size: 30px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 4px;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  font-size: 1rem;
   opacity: 0.6;
   margin-right: 5px;
 }
 
 .projects-section-title {
   font-weight: bold;
-  /* font-size: 1.5em; */
   font-size: 1.5rem;
 }
 
@@ -418,21 +418,17 @@ button {
   margin-top: 20px;
 }
 
-.project-item,
-.manage-projects-item {
-  display: flex;
-  padding: 2px;
-  align-items: center;
-  gap: 7px;
+.project-item {
   margin-top: 20px;
-  max-width: 400px;
-  /* line-height: 1.2rem; */
 }
 
-.project-item > span {
+.project-item-button {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  gap: 7px;
   font-size: 1.2rem;
   text-align: start;
-  /* width: 300px; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -452,13 +448,17 @@ button {
   display: flex;
 }
 
-.manage-projects-button {
-  font-size: 0.8rem;
+.manage-projects-info {
+  font-size: 0.9rem;
   display: flex;
   gap: 5px;
   align-items: center;
-  /* margin-left: 10px; */
   margin-top: 30px;
+  color: gray;
+}
+
+.manage-projects-icon {
+  font-size: 1.2rem;
 }
 
 /* ///////////NEW PROJECT FORM */
@@ -492,10 +492,9 @@ button {
   justify-items: center;
   align-items: center;
 }
-.new-project-form-h3,
+.new-project-form-title,
 .edit-project-form-h3 {
   margin-left: 30px;
-  /* font-size: 1.5em; */
   font-size: 1.5rem;
 }
 .new-project-form-save,
@@ -537,7 +536,6 @@ button {
   outline: none;
   width: 90%;
   padding: 10px;
-  /* font-size: 1.5em; */
   font-size: 1.5rem;
 }
 .color-form-group,
@@ -560,12 +558,10 @@ button {
 }
 .selected-color-label,
 .edit-selected-color-label {
-  /* font-size: 1.3em; */
   font-size: 1.3rem;
 }
 .selected-project-color,
 .edit-selected-project-color {
-  /* font-size: 1em; */
   font-size: 1rem;
 }
 
@@ -579,7 +575,6 @@ button {
   background-color: white;
   height: 100%;
   width: 100%;
-  /* border: 3px solid var(--secondary); */
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   border-bottom: none;
@@ -598,7 +593,7 @@ button {
   display: flex;
   flex-direction: column;
 }
-.color-list-item {
+.color-list-button {
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
   padding: 1rem;
@@ -607,8 +602,7 @@ button {
   align-items: center;
   gap: 1rem;
 }
-.color-list-item > span {
-  /* font-size: 1.2em; */
+.color-list-button > span {
   font-size: 1.2rem;
 }
 .close-color-choices {
@@ -620,7 +614,6 @@ button {
 .welcome {
   width: 100%;
   height: 100%;
-  /* background-color: var(--primary); */
 }
 .welcome h2 {
   margin-top: 1rem;
@@ -717,7 +710,6 @@ button {
 
   .App {
     padding-left: 300px;
-    /* border: 2px dashed black; */
   }
 
   .App:has(.close),
