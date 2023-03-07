@@ -43,6 +43,24 @@ function Dashboard({ currentUser }) {
     }
   }, []);
 
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth > 1024) {
+        setPopupIsOpen(true);
+      } else {
+        setPopupIsOpen(false);
+      }
+    }
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   function toggleModal() {
     setModalIsOpen(!modalIsOpen);
   }
