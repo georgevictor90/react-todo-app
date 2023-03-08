@@ -3,10 +3,6 @@ import { ProjectsContext } from "../Dashboard/Dashboard";
 import Project from "./undraw-project-src.svg";
 
 import {
-  IoRadioButtonOffOutline,
-  IoCheckmarkCircleOutline,
-} from "react-icons/io5";
-import {
   doc,
   deleteDoc,
   query,
@@ -14,6 +10,7 @@ import {
   onSnapshot,
   orderBy,
 } from "firebase/firestore";
+import TaskCard from "../TaskCard/TaskCard";
 
 export default function DefaultProject() {
   const { currentProject, projects, tasksRef } = useContext(ProjectsContext);
@@ -26,39 +23,12 @@ export default function DefaultProject() {
     ///Create task cards
     const cards = currentProjectTasks.map((task) => {
       return (
-        <div key={task.id} id={task.id} className="task-card">
-          <div className="task-always-visible">
-            {removedCard !== task.id ? (
-              <IoRadioButtonOffOutline
-                data-id={task.id}
-                onClick={toggleRemove}
-                className="task-circle"
-              />
-            ) : (
-              <IoCheckmarkCircleOutline
-                data-id={task.id}
-                onClick={toggleRemove}
-                className="task-circle"
-              />
-            )}
-            <div
-              style={
-                removedCard === task.id
-                  ? { textDecoration: "line-through" }
-                  : null
-              }
-              className="task-card-title"
-            >
-              {task.title}
-            </div>
-          </div>
-          <div className="task-expandable hidden-element">
-            {task.description && (
-              <p className="task-card-description">{task.description}</p>
-            )}
-            <span className="task-card-description">{task.formattedDate}</span>
-          </div>
-        </div>
+        <TaskCard
+          key={task.id}
+          task={task}
+          removedCard={removedCard}
+          toggleRemove={toggleRemove}
+        />
       );
     });
     setTaskCards(cards);
@@ -106,6 +76,7 @@ export default function DefaultProject() {
   }
 
   function toggleRemove(e) {
+    console.log(e.target.dataset.id);
     const id = e.target.dataset.id;
     setRemovedCard(id);
     setTimeout(() => {
@@ -117,7 +88,7 @@ export default function DefaultProject() {
   return (
     <section className="section-content">
       {taskCards.length ? (
-        <div className="tasks-container">{taskCards}</div>
+        <ul className="tasks-container">{taskCards}</ul>
       ) : (
         <div className="section-img-and-info">
           <img className="section-image" src={Project} alt="No tasks" />
