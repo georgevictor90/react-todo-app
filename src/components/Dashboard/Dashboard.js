@@ -104,7 +104,7 @@ function Dashboard({ currentUser }) {
 
           <DefaultProject />
 
-          <AddTask currentUser={currentUser} />
+          <AddTask currentUser={currentUser} popupIsOpen={popupIsOpen} />
         </ProjectsContext.Provider>
 
         <Footer togglePopup={togglePopup} toggleModal={toggleModal} />

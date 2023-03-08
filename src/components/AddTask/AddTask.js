@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { ProjectsContext, TogglersContext } from "../Dashboard/Dashboard";
-import { RxPaperPlane } from "react-icons/rx";
+import { RxPaperPlane, RxPinLeft } from "react-icons/rx";
 import { SlClose } from "react-icons/sl";
 import Modal from "react-modal";
 import DatePicker from "react-datepicker";
@@ -17,9 +17,10 @@ import {
 
 import "react-datepicker/dist/react-datepicker.css";
 
+// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement("#root");
 
-export default function AddTask({ currentUser }) {
+export default function AddTask({ currentUser, popupIsOpen }) {
   const {
     currentProject,
     setCurrentProject,
@@ -137,6 +138,9 @@ export default function AddTask({ currentUser }) {
       isOpen={modalIsOpen}
       onRequestClose={toggleModal}
       contentLabel="Add Task"
+      style={{
+        overlay: { left: `${popupIsOpen ? "300px" : "0"}` },
+      }}
     >
       <form action="" className="task-editor">
         <SlClose onClick={toggleModal} className="close-modal" />
