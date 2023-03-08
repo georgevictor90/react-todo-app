@@ -194,7 +194,7 @@ li {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 5px;
+  gap: 3 px;
 }
 
 .task-card-title {
@@ -209,7 +209,7 @@ li {
 }
 
 .task-circle {
-  font-size: 1rem;
+  font-size: 1.6rem;
 }
 
 .status-text {
