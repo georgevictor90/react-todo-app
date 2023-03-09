@@ -69,15 +69,19 @@ export default function PopupMenu() {
             style={{ color: `${project.colorCode}` }}
           />
           <span>{project.name}</span>
-          <div className="edit-project-buttons">
+        </button>
+        <div className="edit-project-buttons">
+          <button>
             <IoCreateOutline onClick={() => handleProjectEdit(project.id)} />
+          </button>
+          <button>
             <IoTrashBinOutline
               onClick={() => {
                 handleProjectDelete(project.id);
               }}
             />
-          </div>
-        </button>
+          </button>
+        </div>
       </li>
     );
   });
@@ -127,8 +131,7 @@ export default function PopupMenu() {
         <div className="project-section-header">
           <span className="projects-section-title">Projects</span>
           <button onClick={toggleForm} className="new-project-button">
-            add new
-            <IoAddCircleOutline className="section-icon" />
+            <IoAddCircleOutline />
           </button>
         </div>
         <ul className="projects-section-list">{userProjectLinks}</ul>
