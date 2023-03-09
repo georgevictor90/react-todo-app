@@ -68,7 +68,6 @@ li {
   text-overflow: ellipsis;
   color: var(--secondary);
   line-height: 1.5;
-  /* opacity: 0.95; */
 }
 
 .App-header .signout-button {
@@ -352,10 +351,10 @@ li {
   box-sizing: border-box;
   position: absolute;
   bottom: 0;
-  background-color: white;
+  background-color: snow;
   height: 100%;
   width: 100%;
-  border: 1px solid #f0f0f0;
+  border-right: 1px solid #dedede;
   padding: 20px;
   opacity: 1;
   transition: all 400ms ease;
@@ -366,21 +365,18 @@ li {
   opacity: 0;
 }
 
-.close-button {
-  font-size: 2.5rem;
+.close-button,
+.new-project-button,
+.edit-project-buttons {
   opacity: 0.6;
+  color: var(--secondary);
+}
+
+.close-button {
+  font-size: 1.5rem;
   display: block;
   margin-left: auto;
   margin-bottom: 20px;
-}
-
-.popup-menu > li {
-  margin-top: 20px;
-  cursor: pointer;
-}
-
-.menu-sections {
-  padding-left: 10px;
 }
 
 .menu-sections-list {
@@ -396,16 +392,16 @@ li {
 }
 
 .menu-sections-list button {
-  color: var(--secondary);
+  font-family: "Montserrat", sans-serif;
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   padding: 4px;
 }
 
 .section-icon {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   flex-shrink: 0;
 }
 
@@ -417,41 +413,50 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 2rem;
 }
 
 .new-project-button {
-  border: 1px solid grey;
+  font-size: 1.5rem;
   border-radius: 5px;
-  padding: 4px;
   display: flex;
-  gap: 3px;
   align-items: center;
-  font-size: 1rem;
-  opacity: 0.6;
-  margin-right: 5px;
 }
 
 .projects-section-title {
+  font-family: "Montserrat", sans-serif;
+  color: var(--secondary);
+  opacity: 0.7;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .projects-section-list,
 .manage-projects-list {
   margin-left: 10px;
-  margin-top: 20px;
 }
 
-.project-item {
-  margin-top: 20px;
+.project-item,
+.menu-sections-list > li {
+  padding: 0.3rem;
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  border-radius: 8px;
+}
+.project-item:hover,
+.menu-sections-list > li:hover {
+  background-color: whitesmoke;
 }
 
 .project-item-button {
+  font-family: "Montserrat", sans-serif;
+  color: var(--secondary);
   display: flex;
   align-items: center;
   padding: 4px;
   gap: 7px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   text-align: start;
   white-space: nowrap;
   overflow: hidden;
@@ -460,16 +465,19 @@ li {
 
 .edit-project-buttons {
   display: none;
-  margin-left: auto;
+  align-items: center;
   gap: 0.5rem;
 }
 
 .edit-project-buttons > * {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
 }
 
 .project-item:hover .edit-project-buttons {
-  display: flex;
+  display: inline-flex;
+  margin-left: auto;
 }
 
 .manage-projects-info {
