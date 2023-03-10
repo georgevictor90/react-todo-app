@@ -76,7 +76,6 @@ export default function DefaultProject() {
   }
 
   function toggleRemove(e) {
-    console.log(e.target.dataset.id);
     const id = e.target.dataset.id;
     setRemovedCard(id);
     setTimeout(() => {

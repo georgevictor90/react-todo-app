@@ -8,30 +8,25 @@ function Login({ setIsRegistering }) {
   const [errorMsg, setErrorMsg] = useState("");
 
   function signIn() {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((credential) => {
-        const user = credential.user;
-        console.log(user.uid);
-      })
-      .catch((error) => {
-        switch (error.code) {
-          case "auth/user-not-found":
-            setErrorMsg("Error: User not found");
-            break;
+    signInWithEmailAndPassword(auth, email, password).catch((error) => {
+      switch (error.code) {
+        case "auth/user-not-found":
+          setErrorMsg("Error: User not found");
+          break;
 
-          case "auth/wrong-password":
-            setErrorMsg("Error: Wrong password");
-            break;
+        case "auth/wrong-password":
+          setErrorMsg("Error: Wrong password");
+          break;
 
-          case "auth/invalid-email":
-            setErrorMsg("Error: Invalid email");
-            break;
+        case "auth/invalid-email":
+          setErrorMsg("Error: Invalid email");
+          break;
 
-          default:
-            console.log(error.message);
-            break;
-        }
-      });
+        default:
+          console.log(error.message);
+          break;
+      }
+    });
   }
 
   function handleLogin(e) {
