@@ -32,7 +32,8 @@ li {
   list-style: none;
 }
 
-.App {
+.App,
+.dashboard {
   text-align: center;
   position: relative;
   background-color: white;
@@ -46,6 +47,10 @@ li {
 
 .App-link {
   color: #61dafb;
+}
+
+.dashboard {
+  width: 100%;
 }
 
 .App-header,
@@ -372,11 +377,11 @@ li {
   color: var(--secondary);
 }
 
-.close-button {
+.close-button,
+.new-project-button {
   font-size: 1.5rem;
   display: block;
   margin-left: auto;
-  margin-bottom: 20px;
 }
 
 .menu-sections-list {
@@ -423,12 +428,13 @@ li {
   align-items: center;
 }
 
-.projects-section-title {
+.projects-section-title,
+.new-project-form-title {
   font-family: "Montserrat", sans-serif;
   color: var(--secondary);
   opacity: 0.7;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .projects-section-list,
@@ -494,8 +500,7 @@ li {
 }
 
 /* ///////////NEW PROJECT FORM */
-.new-project-form,
-.edit-project-form {
+.new-project-form {
   display: block;
   z-index: 90;
   box-sizing: border-box;
@@ -512,88 +517,79 @@ li {
   opacity: 1;
   transition: all 400ms ease;
 }
-.close-project-form,
-.close-edit-project-form {
+.close-project-form {
   transform: translateX(100%);
   opacity: 0;
   display: none;
 }
-.new-project-form-header,
-.edit-project-form-header {
+.new-project-form-header {
   display: flex;
   justify-items: center;
   align-items: center;
 }
-.new-project-form-title,
-.edit-project-form-h3 {
+.new-project-form-title {
   margin-left: 30px;
-  font-size: 1.5rem;
 }
-.new-project-form-save,
-.edit-project-form-save {
+.new-project-form-save {
   margin-left: auto;
 }
 .new-project-form-back,
-.new-project-form-save,
-.edit-project-form-save,
-.edit-project-form-back {
-  font-size: 2.5rem;
+.new-project-form-save {
+  color: var(--secondary);
+  font-size: 1.5rem;
   opacity: 0.6;
 }
 
-.form-group,
-.edit-form-group {
+.form-group {
   margin-top: 30px;
   width: 100%;
+  font-family: monospace;
   box-sizing: border-box;
-  padding: 10px;
-  border: 2px solid rgba(0, 0, 0, 0.8);
-  border-radius: 5px;
+  border-radius: 12px;
   position: relative;
   opacity: 0.6;
 }
-.form-group > label,
-.edit-form-group > label {
+.form-group > label {
   position: absolute;
-  top: -14px;
+  top: -8px;
   left: 20px;
   background-color: white;
-  font-size: 1.2em;
+  font-size: 0.8rem;
+  padding-inline: 3px;
 }
 .form-group > input,
-.form-group > input:active,
-.edit-form-group > input,
-.edit-form-group > input:active {
+.form-group > input:active {
+  font-family: "Montserrat", sans-serif;
   border: none;
-  outline: none;
-  width: 90%;
-  padding: 10px;
-  font-size: 1.5rem;
+  border-radius: 12px;
+  width: 100%;
+  padding: 12px 10px;
+  font-size: 1rem;
 }
-.color-form-group,
-.edit-color-form-group {
+
+.form-group > input:focus-visible {
+  outline: 3px solid red;
+}
+
+.color-form-group {
   margin-top: 30px;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 5px;
 }
-.color-label-and-name,
-.edit-color-label-and-name {
+.color-label-and-name {
   display: flex;
   flex-direction: column;
   gap: 5px;
   text-align: left;
 }
-.color-icon,
-.edit-color-icon {
-  font-size: 2.5rem;
+.color-icon {
+  font-size: 1.5rem;
+  filter: drop-shadow(1px 1px 1px gray);
 }
-.selected-color-label,
-.edit-selected-color-label {
-  font-size: 1.3rem;
-}
-.selected-project-color,
-.edit-selected-project-color {
+
+.selected-project-color {
+  text-shadow: 1px 1px 1px gray;
   font-size: 1rem;
 }
 
@@ -619,24 +615,27 @@ li {
   align-items: flex-start;
   gap: 1rem;
 }
+.color-choices-container > h1 {
+  color: var(--secondary);
+  margin: 0 auto;
+  font-size: 1.3rem;
+  padding: 1rem;
+}
 .color-choices-list {
   width: 100%;
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
 }
 .color-list-button {
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px;
   padding: 1rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 1rem;
+  gap: 5px;
 }
-.color-list-button > span {
-  font-size: 1.2rem;
-}
+
 .close-color-choices {
   transform: translateY(100%);
   opacity: 0;
@@ -738,22 +737,8 @@ li {
     transform: translateX(-100%);
   }
 
-  .App {
-    padding-left: 300px;
-  }
-
-  .App:has(.close),
-  .App:has(.welcome) {
-    padding: 0;
-  }
-
-  .App:has(.close) .new-project-form {
-    width: 100%;
-  }
-
   .new-project-form {
-    padding: 20px 10%;
-    width: calc(100% - 300px);
+    padding: 20px 20%;
   }
 
   .tasks-container {
