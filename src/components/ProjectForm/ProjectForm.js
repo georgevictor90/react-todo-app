@@ -84,11 +84,19 @@ export default function ProjectForm({ applyPadding }) {
       }
     >
       <div className="new-project-form-header">
-        <button onClick={toggleForm} className="new-project-form-back">
+        <button
+          type="button"
+          onClick={toggleForm}
+          className="new-project-form-back"
+        >
           <IoArrowBackCircleOutline />
         </button>
         <h1 className="new-project-form-title">Add Project</h1>
-        <button onClick={handleClick} className="new-project-form-save">
+        <button
+          type="button"
+          onClick={handleClick}
+          className="new-project-form-save"
+        >
           <IoCheckmarkCircleOutline />
         </button>
       </div>
