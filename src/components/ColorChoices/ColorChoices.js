@@ -44,7 +44,7 @@ export default function ColorChoices({
           : "color-choices-container close-color-choices"
       }
     >
-      <h1>Color</h1>
+      <h1>Project color</h1>
       <ul className="color-choices-list">{colorChoicesElements}</ul>
     </div>
   );
