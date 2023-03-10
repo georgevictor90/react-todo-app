@@ -26,7 +26,12 @@ export default function ColorChoices({
             style={{ color: `${color.code}` }}
             className="color-icon"
           />
-          <span>{color.name}</span>
+          <span
+            className="selected-project-color"
+            style={{ color: `${color.code}` }}
+          >
+            {color.name}
+          </span>
         </button>
       </li>
     );
@@ -39,7 +44,7 @@ export default function ColorChoices({
           : "color-choices-container close-color-choices"
       }
     >
-      <h3>Color</h3>
+      <h1>Color</h1>
       <ul className="color-choices-list">{colorChoicesElements}</ul>
     </div>
   );
