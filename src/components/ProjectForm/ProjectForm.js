@@ -8,7 +8,7 @@ import {
 } from "react-icons/io5";
 import { addDoc, doc, setDoc } from "firebase/firestore";
 
-export default function ProjectForm() {
+export default function ProjectForm({ applyPadding }) {
   const {
     projectsCollectionRef,
     projectToEdit,
@@ -76,22 +76,23 @@ export default function ProjectForm() {
 
   return (
     <form
+      style={{
+        width: applyPadding ? "calc(100% - 300px)" : "100%",
+      }}
       className={
         formIsOpen ? "new-project-form" : "new-project-form close-project-form"
       }
     >
       <div className="new-project-form-header">
-        <IoArrowBackCircleOutline
-          onClick={toggleForm}
-          className="new-project-form-back"
-        />
+        <button onClick={toggleForm} className="new-project-form-back">
+          <IoArrowBackCircleOutline />
+        </button>
         <h1 className="new-project-form-title">Add Project</h1>
-        <IoCheckmarkCircleOutline
-          onClick={handleClick}
-          className="new-project-form-save"
-        />
+        <button onClick={handleClick} className="new-project-form-save">
+          <IoCheckmarkCircleOutline />
+        </button>
       </div>
-      <div style={{ outline: `1px solid ${colorCode}` }} className="form-group">
+      <div style={{ border: `2px solid ${colorCode}` }} className="form-group">
         <label htmlFor="projectName" className="project-name-label">
           Name
         </label>
@@ -114,8 +115,12 @@ export default function ProjectForm() {
           className="color-icon main-color-icon"
         />
         <div className="color-label-and-name">
-          <span className="selected-color-label">Color</span>
-          <span className="selected-project-color">{color}</span>
+          <span
+            className="selected-project-color"
+            style={{ color: `${colorCode}` }}
+          >
+            {color}
+          </span>
         </div>
       </button>
 
