@@ -365,6 +365,17 @@ li {
   transition: all 400ms ease;
 }
 
+.current-project,
+.current-project:hover {
+  background-color: #dedede !important;
+}
+
+.current-project span {
+  color: cadetblue;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
 .close {
   transform: translateY(100%);
   opacity: 0;
@@ -620,6 +631,7 @@ li {
   margin: 0 auto;
   font-size: 1.3rem;
   padding: 1rem;
+  opacity: 0.7;
 }
 .color-choices-list {
   width: 100%;

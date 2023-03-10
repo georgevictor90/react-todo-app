@@ -14,6 +14,7 @@ import { doc, deleteDoc, getDoc } from "firebase/firestore";
 export default function PopupMenu() {
   const {
     projects,
+    currentProject,
     setCurrentProject,
     setProjectToEdit,
     projectsCollectionRef,
@@ -57,7 +58,14 @@ export default function PopupMenu() {
 
   const userProjectLinks = userProjects.map((project) => {
     return (
-      <li key={project.id} className="project-item">
+      <li
+        key={project.id}
+        className={
+          project.name === currentProject
+            ? "project-item current-project"
+            : "project-item"
+        }
+      >
         <button
           className="project-item-button"
           onClick={() => {
