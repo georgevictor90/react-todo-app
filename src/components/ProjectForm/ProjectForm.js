@@ -48,8 +48,8 @@ export default function ProjectForm({ applyPadding }) {
       setProjectToEdit(null);
     } else {
       createProject(project);
-      setCurrentProject(project.name);
     }
+    setCurrentProject(project.name);
     resetProjectForm();
     toggleForm();
     togglePopup();
