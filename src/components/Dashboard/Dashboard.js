@@ -24,6 +24,8 @@ function Dashboard({ currentUser }) {
   const [popupIsOpen, setPopupIsOpen] = useState(false);
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [projectToEdit, setProjectToEdit] = useState(null);
+  const [applyPadding, setApplyPadding] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(null);
 
   useEffect(() => {
     if (currentProject) localStorage.setItem("currentProject", currentProject);
@@ -45,11 +47,8 @@ function Dashboard({ currentUser }) {
 
   useEffect(() => {
     function handleResize() {
-      if (window.innerWidth > 1024) {
-        setPopupIsOpen(true);
-      } else {
-        setPopupIsOpen(false);
-      }
+      setWindowWidth(window.innerWidth);
+      window.innerWidth > 1023 ? setPopupIsOpen(true) : setPopupIsOpen(false);
     }
 
     handleResize();
@@ -60,6 +59,12 @@ function Dashboard({ currentUser }) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (windowWidth >= 768 && popupIsOpen) {
+      setApplyPadding(true);
+    } else setApplyPadding(false);
+  }, [popupIsOpen, windowWidth]);
 
   function toggleModal() {
     setModalIsOpen(!modalIsOpen);
@@ -74,7 +79,12 @@ function Dashboard({ currentUser }) {
   }
 
   return (
-    currentUser && (
+    <div
+      className="dashboard"
+      style={{
+        paddingLeft: applyPadding === true && "300px",
+      }}
+    >
       <TogglersContext.Provider
         value={{
           togglePopup,
@@ -99,7 +109,7 @@ function Dashboard({ currentUser }) {
         >
           <PopupMenu />
 
-          <ProjectForm />
+          <ProjectForm applyPadding={applyPadding} />
           <TopBar />
 
           <DefaultProject />
@@ -109,7 +119,7 @@ function Dashboard({ currentUser }) {
 
         <Footer togglePopup={togglePopup} toggleModal={toggleModal} />
       </TogglersContext.Provider>
-    )
+    </div>
   );
 }
 
